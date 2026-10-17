@@ -98,33 +98,59 @@ function decodeAbiString(data) {
   return output;
 }
 
+const DNTC_META_CID = "QmXCpszKCkJNSmbor57emDt6rVP5rcspoCJj5mYYhtfhqi";
+
+function hostedDeadpoolImage(tokenId) {
+  // Prefer Furbi-hosted assets (same-origin CDN on furbi.world) — ~0.2s vs multi-second IPFS.
+  return `https://furbi.world/nft/deadpool/images/${tokenId}.jpg`;
+}
+
 function normalizeMediaUrl(url) {
   if (!url) return "";
   if (url.startsWith("ipfs://")) return `https://ipfs.io/ipfs/${url.slice(7)}`;
+  if (url.startsWith("/nft/")) return `https://furbi.world${url}`;
   return /^https?:\/\//i.test(url) ? url : "";
 }
 
+function formatTraits(attributes) {
+  if (!Array.isArray(attributes) || !attributes.length) return "No traits in metadata yet.";
+  return attributes
+    .map((a) => `${a.trait_type || a.trait || "Trait"}: ${a.value}`)
+    .join(" · ");
+}
+
 async function getTokenMetadata(tokenId) {
+  // Hosted image + metadata CID (traits). Store primary; no OpenSea custody.
+  const hosted = hostedDeadpoolImage(tokenId);
+  const endpoints = [
+    `https://furbi.world/nft/deadpool/metadata/${tokenId}.json`,
+    `https://gateway.pinata.cloud/ipfs/${DNTC_META_CID}/${tokenId}`,
+    `https://ipfs.io/ipfs/${DNTC_META_CID}/${tokenId}`,
+  ];
   try {
     const uri = decodeAbiString(await rpcCall(`0xc87b56dd${encodeUint256(tokenId)}`));
-    const normalized = normalizeMediaUrl(uri);
-    const endpoints = uri.startsWith("ipfs://")
-      ? [`https://gateway.pinata.cloud/ipfs/${uri.slice(7)}`, `https://ipfs.io/ipfs/${uri.slice(7)}`]
-      : [normalized];
-    for (const endpoint of endpoints) {
-      if (!endpoint) continue;
-      try {
-        const response = await fetch(endpoint);
-        if (!response.ok) continue;
-        const metadata = await response.json();
-        const image = metadata.image?.startsWith("ipfs://") ? `https://gateway.pinata.cloud/ipfs/${metadata.image.slice(7)}` : normalizeMediaUrl(metadata.image);
-        return { name: metadata.name, image, attributes: metadata.attributes || [] };
-      } catch { /* Try the next public gateway. */ }
+    if (uri?.startsWith("ipfs://")) {
+      endpoints.splice(1, 0, `https://gateway.pinata.cloud/ipfs/${uri.slice(7)}`);
+    } else if (uri) {
+      endpoints.splice(1, 0, normalizeMediaUrl(uri));
     }
-    return {};
-  } catch {
-    return {};
+  } catch { /* RPC optional when hosted meta exists */ }
+
+  for (const endpoint of endpoints) {
+    if (!endpoint) continue;
+    try {
+      const response = await fetch(endpoint);
+      if (!response.ok) continue;
+      const metadata = await response.json();
+      return {
+        name: metadata.name || `DNTC #${tokenId}`,
+        description: metadata.description || "",
+        image: hosted,
+        attributes: Array.isArray(metadata.attributes) ? metadata.attributes : [],
+      };
+    } catch { /* next */ }
   }
+  return { name: `DNTC #${tokenId}`, image: hosted, attributes: [] };
 }
 
 async function getWalletTokenIds(wallet) {
@@ -154,7 +180,7 @@ function selectWalletFighter(fighter, card) {
   ownedFighterImage.src = fighter.image;
   ownedFighterImage.alt = fighter.name;
   ownedFighterName.textContent = fighter.name;
-  ownedFighterDetail.textContent = `Token #${fighter.tokenId} is selected for your next fight.`;
+  ownedFighterDetail.textContent = `Token #${fighter.tokenId} · ${formatTraits(fighter.attributes)} · selected for fight. List proof on furbi.world/store (wallet-signed).`;
   openGameWithNft.href = `index.html?walletFighter=${encodeURIComponent(fighter.tokenId)}`;
   fighterUnlocked.hidden = false;
   walletMessage.textContent = `DNTC #${fighter.tokenId} selected. Open the game to fight as this exact NFT.`;
@@ -255,7 +281,7 @@ async function verifyOwnedToken() {
     ownedFighterImage.src = fighter.image;
     ownedFighterImage.alt = fighter.name;
     ownedFighterName.textContent = fighter.name;
-    ownedFighterDetail.textContent = `Token #${tokenId} belongs to ${shortAddress(connectedAccount)}.`;
+    ownedFighterDetail.textContent = `Token #${tokenId} belongs to ${shortAddress(connectedAccount)}. ${formatTraits(fighter.attributes)}`;
     openGameWithNft.href = `index.html?walletFighter=${encodeURIComponent(tokenId)}`;
     fighterUnlocked.hidden = false;
     const savedCount = JSON.parse(localStorage.getItem("dntcWalletFighters") || "[]").length;

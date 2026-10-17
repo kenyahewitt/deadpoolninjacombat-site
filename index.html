@@ -2,16 +2,57 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#030805">
-    <meta name="description" content="Deadpool Ninja Turtles Combat — a fast tag-team browser fighting game.">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Deadpool Ninja Turtles Combat — find the universe, live mints, and a fast tag-team browser fighting game.">
     <title>Deadpool Ninja Turtles Combat</title>
+    <link rel="canonical" href="https://deadpoolninjacombat.store/">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23030805'/%3E%3Cpath d='M10 14h44v10H36v26H24V24H10z' fill='%2349ff12'/%3E%3Cpath d='M18 30h28v8H18z' fill='%23ffd400'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="styles.css?v=20260830-exact-wallet-fighter">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20261016-full-action-1">
     <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js" defer=""></script>
-    <script src="app.js?v=20260830-exact-wallet-fighter" defer=""></script>
+    <script src="app.js?v=20261016-full-action-1" defer=""></script>
   </head>
   <body>
     <noscript>This game needs JavaScript enabled.</noscript>
+
+    <div class="universe-shell">
+      <header class="site-chrome">
+        <a class="chrome-brand" href="/">DNTC</a>
+        <nav class="chrome-nav" aria-label="Site">
+          <a href="marketplace.html#universe">Universe</a>
+          <a href="#selectScreen">Play</a>
+          <a href="games.html">Game Vault</a>
+          <a href="marketplace.html">Marketplace</a>
+          <a href="marketplace.html#ninjaagent">NinjaAgent</a>
+          <a href="terms.html">Terms</a>
+        </nav>
+        <a class="chrome-x" href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">X / @furbi59360</a>
+      </header>
+      <section class="universe-door" aria-labelledby="universeDoorTitle">
+        <p class="door-kicker">Deadpool Ninja Turtles Combat</p>
+        <h1 id="universeDoorTitle">Find the universe.</h1>
+        <p class="door-lede">Official door for live mints, NinjaAgent, and the tag-team fighter. Verify every URL before you connect a wallet.</p>
+        <div class="door-actions">
+          <a class="door-cta door-cta-primary" href="marketplace.html#universe">Find the universe</a>
+          <a class="door-cta" href="https://www.launchmynft.io/collections/0xdfF1a5dc565a2D8d0C2818f8B190ca8399B869b3/5wXeBBFCBMIoEnquMa2g" target="_blank" rel="noopener noreferrer">Live mint · LaunchMyNFT 86/2800</a>
+          <a class="door-cta" href="https://ord-dropz.xyz/pump/furbi-world-tv" target="_blank" rel="noopener noreferrer">Live mint · Ord Dropz</a>
+          <a class="door-cta door-cta-primary" href="https://furbi.world/" target="_blank" rel="noopener noreferrer">Buy FAGNT · Furbi Agent ↗</a>
+          <a class="door-cta door-cta-primary" href="https://furbi.world/store" target="_blank" rel="noopener noreferrer">NFT store · Furbi + Deadpool ↗</a>
+          <a class="door-cta door-cta-primary" href="/ire-easy">Run ire-1 validator · easy pack</a>
+          <a class="door-cta" href="https://github.com/kenyahewitt/ire-blockchain/issues/8" target="_blank" rel="noopener noreferrer">GitHub #8 ↗</a>
+          <a class="door-cta" href="https://boomer250.com/join/" target="_blank" rel="noopener noreferrer">Canonical join · boomer ↗</a>
+          <a class="door-cta" href="https://furbi.world/ire" target="_blank" rel="noopener noreferrer">furbi.world/ire → join ↗</a>
+          <a class="door-cta" href="#selectScreen">Play combat</a>
+          <a class="door-cta door-cta-primary" href="games.html">Game Vault · $5 SOL</a>
+          <a class="door-cta" href="?race=wanted#raceScreen">Play Coast City: Wanted</a>
+          <a class="door-cta" href="marketplace.html#ninjaagent">NinjaAgent</a>
+          <a class="door-cta" href="marketplace.html#fagnt">FAGNT strip</a>
+        </div>
+        <p class="mode-note">FAGNT (Furbi Agent) is AGENT VERIFIED on Robinhood 4663 — buy on furbi.world. Furbi + Deadpool/DNTC NFTs list/sell on furbi.world/store (agent-secured marketplace — OpenSea is secondary only). ire-1 needs operators (PC/Mac/VPS — phones alone can’t): easy pack on Combat, GitHub #8, boomer250.com/join (or furbi.world/ire). LaunchMyNFT 86/2800 is live. No wash trading. Game below is unchanged.</p>
+      </section>
+    </div>
 
     <main id="app">
       <section class="select-screen" id="selectScreen" aria-labelledby="gameTitle">
@@ -24,6 +65,7 @@
           <div class="select-header-actions">
             <a class="marketplace-link" href="marketplace.html#universe"><span>FIND THE APPS</span><strong>Universe</strong></a>
             <a class="marketplace-link" href="marketplace.html"><span>NFT + NINJAAGENT</span><strong>Marketplace</strong></a>
+            <a class="marketplace-link" href="games.html"><span>ORIGINAL + LICENSED</span><strong>Game Vault</strong></a>
             <button class="icon-button" id="helpButton" type="button" aria-label="Open controls and rules">?</button>
           </div>
         </header>
@@ -191,6 +233,8 @@
           <span>Furbiworld / 2026</span>
           <span>Keyboard + touch controls</span>
           <a href="marketplace.html">NFT + NinjaAgent marketplace</a>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
           <span>Adaptive balance system v2.0</span>
         </footer>
       </section>
@@ -276,9 +320,9 @@
             <div class="desktop-controls" aria-label="Keyboard controls">
               <span><kbd>A</kbd><kbd>D</kbd> Move</span>
               <span><kbd>Shift</kbd> Block</span>
-              <span><kbd>J</kbd> Light</span>
-              <span><kbd>K</kbd> Heavy</span>
-              <span><kbd>L</kbd> Special</span>
+              <span><kbd>J</kbd> Punch</span>
+              <span><kbd>K</kbd> Kick / blade</span>
+              <span><kbd>L</kbd> Weapon</span>
               <span><kbd>Q</kbd> Dash</span>
               <span><kbd>T</kbd> Tag</span>
               <span><kbd>R</kbd> Rage</span>
@@ -301,8 +345,8 @@
               <button data-hold="right" type="button" aria-label="Move right">›</button>
             </div>
             <div class="touch-actions">
-              <button data-action="light" type="button">Light</button>
-              <button data-action="heavy" type="button">Heavy</button>
+              <button data-action="light" type="button">Punch</button>
+              <button data-action="heavy" type="button">Kick</button>
               <button class="special" data-action="special" type="button">Special</button>
               <button class="dash" data-action="dash" type="button">Dash</button>
               <button data-action="tag" type="button">Tag</button>
@@ -321,7 +365,7 @@
           </div>
           <div class="garage-stats" id="garageStats" aria-label="Vehicle performance"></div>
           <div class="garage-ride-rail" id="garageRideRail" aria-label="Available street rides"></div>
-          <footer class="garage-actions"><button class="garage-start" id="garageStartButton" type="button">Start circuit race</button><button class="garage-free" id="garageFreeDriveButton" type="button">Enter free drive</button><button class="garage-back" id="garageBackButton" type="button">Back to fighters</button></footer>
+          <footer class="garage-actions"><button class="garage-wanted" id="garageWantedButton" type="button">Story · Tint to Five Stars</button><button class="garage-start" id="garageStartButton" type="button">Start circuit race</button><button class="garage-free" id="garageFreeDriveButton" type="button">Enter free drive</button><button class="garage-back" id="garageBackButton" type="button">Back to fighters</button></footer>
         </div>
       </section>
 
@@ -333,19 +377,35 @@
             <div class="race-rival"><span>Rival</span><strong id="raceCpuName">Rival</strong><small id="raceCpuRide">Rival ride</small></div>
           </header>
           <div class="race-track" id="raceTrack">
+            <aside class="wanted-mission" id="wantedMission" hidden>
+              <span>Coast City · Wanted</span>
+              <strong id="wantedObjective">Leave the tint stop</strong>
+              <div><b id="wantedStars">☆☆☆☆☆</b><i><em id="jailbreakMeter"></em></i></div>
+              <small id="wantedChapter">Chapter 1 · Ocean Drive</small>
+            </aside>
             <div class="race-progress player"><span id="racePlayerProgress"></span></div><div class="race-progress rival"><span id="raceCpuProgress"></span></div>
             <div class="checkpoint-gate" id="checkpointGate"><span>Checkpoint</span></div>
             <div class="race-traffic" id="raceTraffic" aria-label="Moving city traffic"></div>
             <div class="race-car player-car" id="racePlayerCar"><i></i></div>
+            <div class="race-runner" id="raceRunner" hidden aria-label="Driver on foot"><i id="raceRunnerSprite"></i><b>ON FOOT</b></div>
             <div class="race-car cpu-car" id="raceCpuCar"><i></i></div>
             <div class="race-minimap" aria-hidden="true"><i></i><b></b><span></span></div>
             <div class="race-speed"><strong id="raceSpeed">000</strong><span>MPH</span></div>
             <div class="race-status"><span>Armor <b id="raceArmor">100</b></span><span>Heat <b id="raceHeat">☆☆☆☆☆</b></span><span>Score <b id="raceScore">00000</b></span></div>
             <div class="race-nitro"><span>Nitro</span><i><b id="raceNitro"></b></i></div>
             <div class="race-prompt" id="racePrompt">W throttle · A/D steer · S brake · Q nitro · E hijack</div>
+            <div class="jailbreak-overlay" id="jailbreakOverlay" hidden>
+              <div class="jail-card">
+                <span>Coast City Detention · fictional game event</span>
+                <h2>Busted.</h2>
+                <p id="jailCopy">Break the digital lock before transfer. No real-world instructions—just arcade timing.</p>
+                <div class="jail-timer"><i><b id="jailTimerBar"></b></i><strong id="jailTimer">08.0</strong></div>
+                <button id="jailbreakButton" type="button">Break lock · 0 / 5</button>
+              </div>
+            </div>
           </div>
-          <footer class="race-footer"><span><kbd>W</kbd> throttle</span><span><kbd>A</kbd>/<kbd>D</kbd> steer</span><span><kbd>S</kbd> brake</span><span><kbd>Q</kbd> nitro</span><span><kbd>E</kbd> hijack</span><button id="quitRaceButton" type="button">Quit run</button></footer>
-          <div class="race-touch-controls" aria-label="Touch driving controls"><button data-race-hold="left" type="button">Left</button><button data-race-hold="throttle" type="button">Gas</button><button data-race-hold="right" type="button">Right</button><button data-race-action="nitro" type="button">Nitro</button><button data-race-action="hijack" type="button">Hijack</button></div>
+          <footer class="race-footer"><span><kbd>W</kbd> gas / walk</span><span><kbd>A</kbd>/<kbd>D</kbd> steer / move</span><span><kbd>S</kbd> brake / back</span><span><kbd>Q</kbd> nitro</span><span><kbd>E</kbd> exit / enter ride</span><button id="quitRaceButton" type="button">Quit run</button></footer>
+          <div class="race-touch-controls" aria-label="Touch driving controls"><button data-race-hold="left" type="button">Left</button><button data-race-hold="throttle" type="button">Gas / walk</button><button data-race-hold="right" type="button">Right</button><button data-race-action="nitro" type="button">Nitro</button><button data-race-action="hijack" type="button">Exit / enter</button></div>
         </div>
       </section>
     </main>
@@ -374,7 +434,7 @@
       <span class="panel-label">Combat briefing</span>
       <h2>Moves + gameplay</h2>
       <div class="help-grid">
-        <section><strong>PC controls</strong><p><kbd>A</kbd> <kbd>D</kbd> move · <kbd>Shift</kbd> block · <kbd>J</kbd> light · <kbd>K</kbd> heavy · <kbd>L</kbd> weapon special · <kbd>Q</kbd> street dash · <kbd>T</kbd> tag · <kbd>R</kbd> rage · <kbd>M</kbd> moves.</p></section>
+        <section><strong>PC controls</strong><p><kbd>A</kbd> <kbd>D</kbd> move · <kbd>Shift</kbd> block · <kbd>J</kbd> punch · <kbd>K</kbd> kick or blade heavy · <kbd>L</kbd> weapon special · <kbd>Q</kbd> street dash · <kbd>T</kbd> tag · <kbd>R</kbd> rage · <kbd>M</kbd> moves.</p></section>
         <section><strong>Controller</strong><p>D-pad or left stick moves. <kbd>A</kbd> light · <kbd>Y</kbd> heavy · <kbd>B</kbd> special · <kbd>X</kbd> block · <kbd>RB</kbd> tag · <kbd>LB</kbd> rage · <kbd>L3</kbd> dash · Menu pauses.</p></section>
         <section><strong>Street utility</strong><p>Build Street Heat with clean attacks. Grab floating neon drops for rage, armor, or score. Clear the active street contract for a mastery reward and a rage boost.</p></section>
         <section><strong>Weapon specials</strong><p>Matrix Cap throws a ricochet shield. Rainbow Clan launches a prism shield return. Yellow Ninja spins a razor straw hat. Rasta Super fires heat vision. Ordi Nookie fires twin ordinal laser beams from his glasses.</p></section>
@@ -383,12 +443,14 @@
         <section><strong>Mastery score</strong><p>Damage, named combo finishers, wins, streaks, and knockouts award mastery XP. Build your best combo and raise your persistent combat level.</p></section>
         <section><strong>CPU rounds</strong><p><b>Easy</b> gives you a longer opening and lighter enemy damage. <b>Medium</b> is the balanced arcade fight. <b>Very Difficult</b> reacts faster, guards, chains combos, and awards the largest mastery multiplier.</p></section>
         <section><strong>New challengers</strong><p><b>Allan</b> is a fully human counter fighter with fast hands and a ground-smash special. <b>Master Auren</b> controls space with living-light saber waves. <b>Ordi Nookie</b> mixes pixel-powered punches, twin laser vision, and Inscription Overdrive.</p></section>
+        <section><strong>Coast City: Wanted</strong><p>Pick a ride, survive the fictional five-star pursuit, hijack a flashing traffic ride, and escape detention through a five-tap arcade lock before reaching the safehouse.</p></section>
       </div>
       <div class="combo-movelist" aria-label="Named combo moves">
         <article><strong>Shell Shock Rush</strong><span><kbd>J</kbd> + <kbd>J</kbd> + <kbd>K</kbd></span><small>Fast confirm into a heavy launcher</small></article>
         <article><strong>Weapon Storm</strong><span><kbd>J</kbd> + <kbd>K</kbd> + <kbd>L</kbd></span><small>Heavy weapon finisher and bonus damage</small></article>
         <article><strong>Razor Cyclone</strong><span><kbd>K</kbd> + <kbd>J</kbd> + <kbd>K</kbd></span><small>High-impact reversal chain</small></article>
         <article><strong>Ricochet Breaker</strong><span><kbd>J</kbd> + <kbd>J</kbd> + <kbd>L</kbd></span><small>Double strike into a returning projectile</small></article>
+        <article><strong>Wanted Level Breaker</strong><span><kbd>K</kbd> + <kbd>L</kbd> + <kbd>J</kbd></span><small>Heavy launch, weapon flash, fast pursuit finisher</small></article>
         <article><strong>Ordinal Overload</strong><span><kbd>L</kbd> + <kbd>L</kbd> + <kbd>L</kbd></span><small>Ordi Nookie only · triple laser barrage with bonus damage</small></article>
       </div>
       <form method="dialog"><button class="fight-button" type="submit"><span>Ready</span><small>Esc</small></button></form>

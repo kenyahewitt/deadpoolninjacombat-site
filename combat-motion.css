@@ -1,3 +1,4 @@
+/* cache-bust 20260830-spacex */
 /* Cinematic combat motion layered over the existing arcade visual system. */
 .arena {
   transform-origin: center 72%;
@@ -52,6 +53,20 @@
 .fighter.is-attacking[data-pose="special"] .fighter-sprite {
   animation: special-strike 620ms cubic-bezier(.16, .72, .22, 1);
 }
+
+.fighter-afterimage {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 400% 200%;
+  filter: brightness(1.8) saturate(1.5) drop-shadow(0 0 13px currentColor);
+  opacity: 0;
+  pointer-events: none;
+  animation: strike-afterimage 340ms ease-out both;
+}
+.fighter-right .fighter-afterimage { color:#ff28ad; }.fighter-left .fighter-afterimage { color:#49ff12; }
+.fighter-afterimage.afterimage-special { animation-duration:520ms; color:#20dcff; }
 
 .fighter.is-hit:not(.is-knocked-down) .fighter-sprite {
   animation: hit-shake 280ms ease;
@@ -132,6 +147,12 @@
   22% { transform: translateX(-5%) scale(.97); filter: brightness(1.2); }
   48% { transform: translateX(13%) scale(1.08); filter: brightness(1.7) saturate(1.35); }
   68% { transform: translateX(9%) scale(1.04); }
+}
+
+@keyframes strike-afterimage {
+  0% { opacity:.54; transform:translateX(-10%) scale(.98); }
+  45% { opacity:.24; }
+  100% { opacity:0; transform:translateX(13%) scale(1.06); }
 }
 
 @keyframes knockdown-fall {

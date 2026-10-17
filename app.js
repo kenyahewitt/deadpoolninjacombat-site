@@ -2,7 +2,7 @@
 
 const combatMotionStylesheet = document.createElement("link");
 combatMotionStylesheet.rel = "stylesheet";
-combatMotionStylesheet.href = "combat-motion.css";
+combatMotionStylesheet.href = "combat-motion.css?v=20261016-full-action-1";
 document.head.append(combatMotionStylesheet);
 
 const FIGHTERS = [
@@ -137,6 +137,12 @@ const FIGHTERS = [
   },
 ];
 
+function walletAnimationChassis(tokenId) {
+  const numeric = Number.parseInt(String(tokenId), 10);
+  const index = Number.isFinite(numeric) ? Math.abs(numeric) % FIGHTERS.length : 0;
+  return FIGHTERS[index] || FIGHTERS[0];
+}
+
 // A verified DNTC selected in the marketplace becomes a local combat skin. It keeps
 // the game-balanced Guardian move kit while presenting the holder's own token name/art.
 // Ownership is verified in marketplace.html before this record is written.
@@ -150,6 +156,7 @@ try {
     : savedWalletFighters;
   walletFighters.slice(0, 20).forEach((savedWalletFighter) => {
     if (!savedWalletFighter?.tokenId || savedWalletFighter?.collection?.toLowerCase() !== "0x59652e80e0103303fcf40911fb41eff022eadee2") return;
+    const chassis = walletAnimationChassis(savedWalletFighter.tokenId);
     FIGHTERS.push({
       id: `wallet-dntc-${savedWalletFighter.tokenId}`,
       name: savedWalletFighter.name || `DNTC Fighter #${savedWalletFighter.tokenId}`,
@@ -158,8 +165,10 @@ try {
       rating: 4,
       color: "#efff00",
       image: savedWalletFighter.image || "assets/characters/matrix-cap.jpeg",
-      sprite: savedWalletFighter.image || "assets/characters/matrix-cap.jpeg",
-      spriteRatio: 1,
+      sprite: chassis.sprite,
+      spriteRatio: chassis.spriteRatio,
+      walletArt: savedWalletFighter.image || "assets/characters/matrix-cap.jpeg",
+      animationChassis: chassis.id,
       walletSkin: true,
       rageBonus: 2.1,
       rageName: "Holder Overdrive",
@@ -183,6 +192,8 @@ function registerWireFighter(entry) {
   const knownIndex = FIGHTERS.findIndex((fighter) => fighter.id === entry.id);
   if (knownIndex >= 0) return knownIndex;
   if (!entry.id.startsWith("wallet-dntc-")) return -1;
+  const tokenId = entry.id.replace("wallet-dntc-", "");
+  const chassis = walletAnimationChassis(tokenId);
   // Remote holder fighters use the same balanced, deterministic move kit on both clients.
   FIGHTERS.push({
     id: entry.id,
@@ -192,8 +203,10 @@ function registerWireFighter(entry) {
     rating: 4,
     color: "#efff00",
     image: typeof entry.image === "string" ? entry.image : "assets/characters/matrix-cap.jpeg",
-    sprite: typeof entry.image === "string" ? entry.image : "assets/characters/matrix-cap.jpeg",
-    spriteRatio: 1,
+    sprite: chassis.sprite,
+    spriteRatio: chassis.spriteRatio,
+    walletArt: typeof entry.image === "string" ? entry.image : "assets/characters/matrix-cap.jpeg",
+    animationChassis: chassis.id,
     walletSkin: true,
     rageBonus: 2.1,
     rageName: "Holder Overdrive",
@@ -411,6 +424,7 @@ const COMBO_MOVES = Object.freeze([
   { sequence: ["light", "heavy", "special"], name: "Weapon Storm", bonus: 8, power: "hard", xp: 300 },
   { sequence: ["heavy", "light", "heavy"], name: "Razor Cyclone", bonus: 7, power: "hard", xp: 260 },
   { sequence: ["light", "light", "special"], name: "Ricochet Breaker", bonus: 6, power: "hard", xp: 240 },
+  { sequence: ["heavy", "special", "light"], name: "Wanted Level Breaker", bonus: 9, power: "hard", xp: 340, color: "#62efff" },
   { fighter: "ordi", sequence: ["special", "special", "special"], name: "Ordinal Overload", bonus: 10, power: "hard", xp: 360, color: "#ff62c7" },
   { fighter: "mutant", sequence: ["special", "special", "special"], name: "Midas Mutation Cataclysm", bonus: 12, power: "hard", xp: 400, color: "#f7bb2c" },
   { fighter: "duck", sequence: ["special", "special", "special"], name: "Golden Sonic Lockdown", bonus: 11, power: "hard", xp: 380, color: "#d9b247" },
@@ -495,7 +509,7 @@ const DIFFICULTIES = Object.freeze({
   }),
 });
 
-const ACTION_LABELS = Object.freeze({ light: "LIGHT", heavy: "HEAVY", special: "SPECIAL" });
+const ACTION_LABELS = Object.freeze({ light: "PUNCH", heavy: "KICK / BLADE", special: "WEAPON" });
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -516,6 +530,7 @@ function activeDifficulty() {
 }
 
 const els = {
+  universeShell: $(".universe-shell"),
   selectScreen: $("#selectScreen"),
   battleScreen: $("#battleScreen"),
   raceScreen: $("#raceScreen"),
@@ -616,6 +631,8 @@ const els = {
   racePlayerProgress: $("#racePlayerProgress"),
   raceCpuProgress: $("#raceCpuProgress"),
   racePlayerCar: $("#racePlayerCar"),
+  raceRunner: $("#raceRunner"),
+  raceRunnerSprite: $("#raceRunnerSprite"),
   raceCpuCar: $("#raceCpuCar"),
   racePlayerRide: $("#racePlayerRide"),
   raceCpuRide: $("#raceCpuRide"),
@@ -636,7 +653,18 @@ const els = {
   garageStats: $("#garageStats"),
   garageStartButton: $("#garageStartButton"),
   garageFreeDriveButton: $("#garageFreeDriveButton"),
+  garageWantedButton: $("#garageWantedButton"),
   garageBackButton: $("#garageBackButton"),
+  wantedMission: $("#wantedMission"),
+  wantedObjective: $("#wantedObjective"),
+  wantedStars: $("#wantedStars"),
+  wantedChapter: $("#wantedChapter"),
+  jailbreakMeter: $("#jailbreakMeter"),
+  jailbreakOverlay: $("#jailbreakOverlay"),
+  jailbreakButton: $("#jailbreakButton"),
+  jailCopy: $("#jailCopy"),
+  jailTimer: $("#jailTimer"),
+  jailTimerBar: $("#jailTimerBar"),
 };
 
 const state = {
@@ -670,7 +698,7 @@ const state = {
   reverseUntil: 0,
   dashUntil: 0,
   dashCooldownUntil: 0,
-  race: { active: false, finished: false, garage: false, mode: "circuit", rideIndex: 2, seconds: 90, player: 0, cpu: 0, nitro: 72, cpuNitro: 35, nextRadioAt: 0, speed: 0, x: 50, armor: 100, score: 0, heat: 0, traffic: [], nextTrafficAt: 0, checkpoint: 1, keys: { throttle: false, brake: false, left: false, right: false } },
+  race: { active: false, finished: false, garage: false, mode: "circuit", rideIndex: 2, seconds: 90, player: 0, cpu: 0, nitro: 72, cpuNitro: 35, nextRadioAt: 0, speed: 0, x: 50, armor: 100, score: 0, heat: 0, traffic: [], nextTrafficAt: 0, checkpoint: 1, wantedStage: 0, jailed: false, jailSeconds: 8, jailbreak: 0, escapedJail: false, onFoot: false, footY: 72, footMoving: false, keys: { throttle: false, brake: false, left: false, right: false, sprint: false } },
   street: { heat: 0, contract: null, drops: [], nextDropAt: 0 },
   keys: { left: false, right: false, block: false },
   gamepad: {
@@ -1296,6 +1324,7 @@ function startMatch(options = {}) {
 
   const stage = STAGES[state.stageIndex];
   els.selectScreen.hidden = true;
+  els.universeShell.hidden = true;
   els.raceScreen.hidden = true;
   els.battleScreen.hidden = false;
   els.pauseOverlay.hidden = true;
@@ -1362,6 +1391,7 @@ function openRaceGarage() {
   state.race.finished = false;
   state.race.rideIndex = Number.isInteger(state.race.rideIndex) ? state.race.rideIndex : state.selected[0];
   els.selectScreen.hidden = true;
+  els.universeShell.hidden = true;
   els.battleScreen.hidden = true;
   els.raceScreen.hidden = true;
   els.raceGarage.hidden = false;
@@ -1392,21 +1422,43 @@ function renderRaceTraffic() {
 
 function renderRace() {
   const race = state.race;
+  const wanted = race.mode === "wanted";
   els.raceTimer.textContent = String(Math.max(0, Math.ceil(race.seconds))).padStart(2, "0");
   els.racePlayerProgress.style.width = `${Math.min(100, race.player)}%`;
   els.raceCpuProgress.style.width = `${Math.min(100, race.cpu)}%`;
   els.racePlayerCar.style.left = `${race.x}%`;
+  els.racePlayerCar.hidden = Boolean(race.onFoot);
+  els.raceRunner.hidden = !race.onFoot;
+  els.raceRunner.style.left = `${race.x}%`;
+  els.raceRunner.style.top = `${race.footY || 72}%`;
+  els.raceRunnerSprite.dataset.pose = race.footMoving ? (Math.floor(now() / 130) % 2 ? "step" : "idle") : "idle";
   els.racePlayerCar.style.setProperty("--steer", race.keys.left ? "-7deg" : race.keys.right ? "7deg" : "0deg");
   els.raceTrack.style.setProperty("--road-motion", `${race.worldOffset || 0}px`);
   els.raceSpeed.textContent = String(Math.round(race.speed)).padStart(3, "0");
   els.raceArmor.textContent = String(Math.max(0, Math.round(race.armor)));
-  els.raceHeat.textContent = `${"★".repeat(Math.min(5, Math.ceil(race.heat / 20)))}${"☆".repeat(Math.max(0, 5 - Math.ceil(race.heat / 20)))}`;
+  const stars = Math.min(5, Math.ceil(race.heat / 20));
+  els.raceHeat.textContent = `${"★".repeat(stars)}${"☆".repeat(Math.max(0, 5 - stars))}`;
   els.raceScore.textContent = String(Math.round(race.score)).padStart(5, "0");
   els.raceNitro.style.width = `${Math.max(0, Math.min(100, race.nitro))}%`;
   els.raceCheckpoint.textContent = race.mode === "free"
     ? `District ${String(race.district).padStart(2, "0")} / free drive`
-    : `${String(race.checkpoint).padStart(2, "0")} / 03 checkpoint`;
-  els.racePrompt.textContent = race.message || `W throttle · A/D steer · S brake · Q nitro ${Math.round(race.nitro)}% · E hijack`;
+    : wanted ? `Wanted chapter ${Math.min(5, race.wantedStage + 1)} / 05` : `${String(race.checkpoint).padStart(2, "0")} / 03 checkpoint`;
+  els.wantedMission.hidden = !wanted;
+  if (wanted) {
+    els.wantedObjective.textContent = race.objective || "Leave the tint stop";
+    els.wantedStars.textContent = `${"★".repeat(stars)}${"☆".repeat(Math.max(0, 5 - stars))}`;
+    els.wantedChapter.textContent = race.chapter || "Chapter 1 · Ocean Drive";
+    els.jailbreakMeter.style.width = `${Math.max(0, Math.min(100, race.jailbreak || 0))}%`;
+  }
+  els.jailbreakOverlay.hidden = !race.jailed;
+  if (race.jailed) {
+    els.jailTimer.textContent = race.jailSeconds.toFixed(1).padStart(4, "0");
+    els.jailTimerBar.style.width = `${Math.max(0, race.jailSeconds / 8 * 100)}%`;
+    els.jailbreakButton.textContent = `Break lock · ${Math.min(5, race.jailTaps || 0)} / 5`;
+  }
+  els.racePrompt.textContent = race.message || (race.onFoot
+    ? "ON FOOT · WASD move · hold Shift to sprint · E enter flashing ride"
+    : `W throttle · A/D steer · S brake · Q nitro ${Math.round(race.nitro)}% · E exit ride`);
   const nextCheckpoint = race.checkpoint * 33;
   els.checkpointGate.classList.toggle("is-visible", nextCheckpoint - race.player < 8 && nextCheckpoint - race.player > -1);
   renderRaceTraffic();
@@ -1424,21 +1476,25 @@ function startRace(options = {}) {
   state.paused = false;
   state.finished = false;
   const rideIndex = state.race.rideIndex;
-  const freeDrive = options.freeDrive === true || (options.freeDrive == null && state.race.mode === "free");
-  state.race = { active: true, finished: false, garage: false, mode: freeDrive ? "free" : "circuit", rideIndex, seconds: freeDrive ? 180 : 90, player: 0, cpu: 0, nitro: 72, cpuNitro: 40, nextRadioAt: now() + 6500, speed: 0, x: 50, armor: 100, score: 0, heat: 0, traffic: [], nextTrafficAt: now() + 900, checkpoint: 1, district: 1, worldOffset: 0, message: freeDrive ? "Free drive: build cash, heat, and hijack any flashing ride" : "", messageUntil: freeDrive ? now() + 3200 : 0, keys: { throttle: false, brake: false, left: false, right: false } };
+  const wantedStory = options.wantedStory === true || (options.wantedStory == null && state.race.mode === "wanted");
+  const freeDrive = !wantedStory && (options.freeDrive === true || (options.freeDrive == null && state.race.mode === "free"));
+  const mode = wantedStory ? "wanted" : freeDrive ? "free" : "circuit";
+  state.race = { active: true, finished: false, garage: false, mode, rideIndex, seconds: wantedStory ? 150 : freeDrive ? 180 : 90, player: 0, cpu: 0, nitro: wantedStory ? 84 : 72, cpuNitro: 40, nextRadioAt: now() + 5200, speed: 0, x: 50, armor: 100, score: 0, heat: wantedStory ? 12 : 0, traffic: [], nextTrafficAt: now() + 900, checkpoint: 1, district: 1, worldOffset: 0, wantedStage: 0, objective: wantedStory ? "Leave the tint stop" : "", chapter: wantedStory ? "Chapter 1 · Ocean Drive" : "", jailed: false, jailSeconds: 8, jailTaps: 0, jailbreak: 0, escapedJail: false, stallAtFive: 0, onFoot: false, footY: 72, footMoving: false, message: wantedStory ? "The lights are on. Accelerate and clear Ocean Drive." : freeDrive ? "Free drive: drive, exit on foot, and take any flashing ride" : "", messageUntil: (wantedStory || freeDrive) ? now() + 3200 : 0, keys: { throttle: false, brake: false, left: false, right: false, sprint: false } };
   els.selectScreen.hidden = true;
+  els.universeShell.hidden = true;
   els.battleScreen.hidden = true;
   els.raceGarage.hidden = true;
   els.raceScreen.hidden = false;
   els.resultOverlay.hidden = true;
   els.racePlayerName.textContent = player.name;
-  els.raceCpuName.textContent = freeDrive ? "Neon City" : cpu.name;
+  els.raceCpuName.textContent = wantedStory ? "Five-Star Pursuit" : freeDrive ? "Neon City" : cpu.name;
   els.racePlayerRide.textContent = STREET_RIDES[rideIndex].name;
-  els.raceCpuRide.textContent = freeDrive ? "Free-roam traffic" : STREET_RIDES[cpuIndex].name;
-  els.raceRadio.textContent = "Radio: night run is live — own the streets.";
+  els.raceCpuRide.textContent = wantedStory ? "Roadblocks · aerial search · interceptors" : freeDrive ? "Free-roam traffic" : STREET_RIDES[cpuIndex].name;
+  els.raceRadio.textContent = wantedStory ? "Dispatch: dark-blue ride leaving Ocean Drive. Units converge." : "Radio: night run is live — own the streets.";
   setRaceRide(els.racePlayerCar, rideIndex);
+  els.raceRunnerSprite.style.backgroundImage = `url("${player.sprite}")`;
   setRaceRide(els.raceCpuCar, cpuIndex);
-  els.raceCpuCar.hidden = freeDrive;
+  els.raceCpuCar.hidden = freeDrive || wantedStory;
   els.raceTraffic.replaceChildren();
   renderRace();
   startTheme("battle", true);
@@ -1448,30 +1504,63 @@ function startRace(options = {}) {
 
 function raceAction(action) {
   const race = state.race;
-  if (!race.active || race.finished) return;
+  if (!race.active || race.finished || race.jailed) return;
   if (action === "accelerate") {
+    if (race.onFoot) return;
     race.speed = Math.min(165, race.speed + 14);
     playSfx("light", { volume: 0.35 });
-  } else if (action === "nitro" && race.nitro >= 15) {
+  } else if (action === "nitro") {
+    if (race.onFoot) {
+      race.message = "Nitro is available after you enter a ride";
+      race.messageUntil = now() + 1500;
+      renderRace();
+      return;
+    }
+    if (race.nitro < 15) {
+      race.message = "Nitro recharging";
+      race.messageUntil = now() + 1100;
+      playSfx("guard");
+      renderRace();
+      return;
+    }
     race.nitro -= 15;
     race.speed = Math.min(190, race.speed + 38);
     els.racePlayerCar.classList.add("is-boosting");
     window.setTimeout(() => els.racePlayerCar.classList.remove("is-boosting"), 280);
     playSfx("special");
   } else if (action === "hijack") {
+    if (!race.onFoot) {
+      if (race.speed > 55) {
+        race.message = "Brake below 55 MPH before exiting";
+        race.messageUntil = now() + 1600;
+        playSfx("guard");
+        renderRace();
+        return;
+      }
+      race.onFoot = true;
+      race.speed = 0;
+      race.footY = 72;
+      race.message = "On foot: move beside a flashing car, truck, or bike and press E";
+      race.messageUntil = now() + 2600;
+      race.score += 100;
+      playSfx("tag");
+      renderRace();
+      return;
+    }
     const target = race.traffic.filter((traffic) => traffic.hijackable).sort((a, b) => Math.abs(a.x - race.x) - Math.abs(b.x - race.x))[0];
     if (!target) {
       race.message = "Get beside a flashing NPC ride to hijack it";
       race.messageUntil = now() + 1600;
       playSfx("guard");
     } else {
+      race.onFoot = false;
       race.rideIndex = target.rideIndex;
       race.traffic = race.traffic.filter((traffic) => traffic !== target);
       race.speed *= 0.72;
       race.armor = Math.min(100, race.armor + 18);
       race.heat = Math.min(100, race.heat + 24);
       race.score += 750;
-      race.message = `Ride hijacked: ${STREET_RIDES[race.rideIndex].name}`;
+      race.message = `Ride entered: ${STREET_RIDES[race.rideIndex].name}`;
       race.messageUntil = now() + 2200;
       els.racePlayerRide.textContent = STREET_RIDES[race.rideIndex].name;
       setRaceRide(els.racePlayerCar, race.rideIndex);
@@ -1479,6 +1568,81 @@ function raceAction(action) {
     }
   }
   renderRace();
+}
+
+function sendToJail(reason = "Vehicle disabled. Coast City patrol has you boxed in.") {
+  const race = state.race;
+  if (race.mode !== "wanted" || race.jailed || race.finished) return;
+  race.jailed = true;
+  race.speed = 0;
+  race.keys = { throttle: false, brake: false, left: false, right: false, sprint: false };
+  race.jailSeconds = 8;
+  race.jailTaps = 0;
+  race.objective = "Break the arcade lock";
+  race.chapter = "Detention event · no real-world instructions";
+  els.jailCopy.textContent = `${reason} Break the digital lock before transfer—this is a fictional five-tap arcade event.`;
+  playSfx("defeat");
+  renderRace();
+  window.setTimeout(() => els.jailbreakButton.focus(), 30);
+}
+
+function attemptJailbreak() {
+  const race = state.race;
+  if (!race.active || !race.jailed) return;
+  race.jailTaps = Math.min(5, (race.jailTaps || 0) + 1);
+  race.jailbreak = race.jailTaps * 20;
+  playSfx(race.jailTaps === 5 ? "rage" : "select", { volume: 0.55 });
+  if (race.jailTaps >= 5) {
+    race.jailed = false;
+    race.escapedJail = true;
+    race.armor = 42;
+    race.heat = 100;
+    race.nitro = Math.max(race.nitro, 58);
+    race.player = Math.max(race.player, 74);
+    race.wantedStage = 4;
+    race.objective = "Reach the safehouse";
+    race.chapter = "Final chapter · No respawn";
+    race.message = "Lock broken. One last run to the safehouse.";
+    race.messageUntil = now() + 3200;
+    els.raceRadio.textContent = "Dispatch: suspect mobile again. Safehouse corridor closing.";
+  }
+  renderRace();
+}
+
+function updateWantedStory(delta, time) {
+  const race = state.race;
+  if (race.mode !== "wanted") return;
+  const prior = race.wantedStage;
+  if (race.player >= 85) race.wantedStage = 4;
+  else if (race.player >= 65) race.wantedStage = 3;
+  else if (race.player >= 38) race.wantedStage = 2;
+  else if (race.player >= 14) race.wantedStage = 1;
+  const stages = [
+    ["Leave the tint stop", "Chapter 1 · Ocean Drive", 18],
+    ["Break the I-95 cordon", "Chapter 2 · Northbound", 42],
+    ["Survive the aerial search", "Chapter 3 · Neon overpass", 64],
+    ["Escape the interceptor units", "Chapter 4 · North Coast", 86],
+    ["Reach the safehouse", "Final chapter · No respawn", 100],
+  ];
+  const [objective, chapter, minimumHeat] = stages[race.wantedStage];
+  race.objective = objective;
+  race.chapter = chapter;
+  race.heat = Math.max(race.heat, minimumHeat);
+  if (race.wantedStage !== prior) {
+    race.score += 1000 + race.wantedStage * 350;
+    race.message = objective;
+    race.messageUntil = time + 2200;
+    els.raceRadio.textContent = [
+      "Dispatch: units joining the pursuit. Keep the route contained.",
+      "Radio: northbound corridor active. Interceptors moving in.",
+      "Aviation: visual acquired over the neon overpass.",
+      "Dispatch: five-star response. Safehouse routes are closing.",
+    ][Math.max(0, race.wantedStage - 1)] || "Dispatch: pursuit continues.";
+    playSfx("ready");
+  }
+  if (!race.onFoot && race.heat >= 100 && race.speed < 6) race.stallAtFive += delta;
+  else race.stallAtFive = Math.max(0, race.stallAtFive - delta * 2);
+  if (!race.escapedJail && race.stallAtFive > 3.8) sendToJail("Five-star units surrounded the stopped vehicle.");
 }
 
 function spawnRaceTraffic() {
@@ -1506,15 +1670,20 @@ function endRace(winner) {
   playSfx(won ? "victory" : "defeat");
   window.setTimeout(() => {
     const freeDrive = race.mode === "free";
-    els.resultLabel.textContent = freeDrive ? "Neon City / Free Drive" : "Street Circuit / Neon Night Run";
-    els.resultTitle.textContent = freeDrive ? "City Run Complete" : won ? "Race Victory" : "Rival Escaped";
+    const wanted = race.mode === "wanted";
+    els.resultLabel.textContent = wanted ? "Coast City: Wanted / Story complete" : freeDrive ? "Neon City / Free Drive" : "Street Circuit / Neon Night Run";
+    els.resultTitle.textContent = wanted ? won ? "Safehouse Reached" : "Transfer Complete" : freeDrive ? "City Run Complete" : won ? "Race Victory" : "Rival Escaped";
     els.resultTitle.style.color = won ? "var(--green)" : "var(--magenta)";
-    els.resultDetail.textContent = freeDrive
+    els.resultDetail.textContent = wanted
+      ? won
+        ? `You cleared the five-star pursuit${race.escapedJail ? ", broke the arcade lock," : ""} and reached the safehouse. +${xp} mastery XP.`
+        : `The Coast City run ended at ${Math.round(race.player)}% with ${Math.round(race.score)} street score. +${xp} mastery XP.`
+      : freeDrive
       ? `Free drive complete with ${Math.round(race.score)} street score and ${Math.ceil(race.heat / 20)} heat stars. +${xp} mastery XP.`
       : won
       ? `You owned the night run. +${xp} mastery XP and a new street score.`
       : `Your rival reached the finish first. +${xp} mastery XP for the run.`;
-    $("span", els.rematchButton).textContent = freeDrive ? "Free drive again" : "Race again";
+    $("span", els.rematchButton).textContent = wanted ? "Replay story" : freeDrive ? "Free drive again" : "Race again";
     els.rematchButton.disabled = false;
     els.resultOverlay.hidden = false;
     els.rematchButton.focus();
@@ -1524,20 +1693,40 @@ function endRace(winner) {
 function updateRace(delta, time) {
   const race = state.race;
   if (!race.active || race.finished) return;
+  if (race.jailed) {
+    race.jailSeconds = Math.max(0, race.jailSeconds - delta);
+    if (race.jailSeconds <= 0) {
+      race.jailed = false;
+      endRace("cpu");
+    } else renderRace();
+    return;
+  }
   const ride = STREET_RIDES[race.rideIndex];
   race.seconds = Math.max(0, race.seconds - delta);
   const throttle = race.keys.throttle || Boolean(state.gamepad.buttons[0]);
   const brake = race.keys.brake || Boolean(state.gamepad.buttons[2]);
   const topSpeed = 105 + ride.speed * 6;
-  if (throttle) race.speed = Math.min(topSpeed, race.speed + delta * (25 + ride.speed * 2.8));
-  else race.speed = Math.max(0, race.speed - delta * 11);
-  if (brake) race.speed = Math.max(0, race.speed - delta * 70);
   const steer = (race.keys.right || state.gamepad.right ? 1 : 0) - (race.keys.left || state.gamepad.left ? 1 : 0);
-  race.x = clamp(race.x + steer * delta * (20 + ride.grip * 1.6) * (0.3 + race.speed / Math.max(1, topSpeed)), 13, 87);
-  race.player = Math.min(100, race.player + delta * race.speed / 68);
-  race.worldOffset = (race.worldOffset + delta * race.speed * 2.4) % 1000;
-  race.score += delta * race.speed * 0.72;
-  race.nitro = Math.min(100, race.nitro + delta * (1.1 + (Math.abs(steer) && race.speed > 70 ? 3.2 : 0)));
+  if (race.onFoot) {
+    const sprintMultiplier = race.keys.sprint ? 1.72 : 1;
+    race.speed = 0;
+    race.footMoving = Boolean(throttle || brake || steer);
+    race.x = clamp(race.x + steer * delta * 28 * sprintMultiplier, 10, 90);
+    race.footY = clamp(race.footY + ((brake ? 1 : 0) - (throttle ? 1 : 0)) * delta * 18 * sprintMultiplier, 48, 86);
+    els.raceRunner.classList.toggle("is-sprinting", race.footMoving && race.keys.sprint);
+    els.raceRunner.classList.toggle("face-left", steer < 0);
+  } else {
+    race.footMoving = false;
+    els.raceRunner.classList.remove("is-sprinting", "face-left");
+    if (throttle) race.speed = Math.min(topSpeed, race.speed + delta * (25 + ride.speed * 2.8));
+    else race.speed = Math.max(0, race.speed - delta * 11);
+    if (brake) race.speed = Math.max(0, race.speed - delta * 70);
+    race.x = clamp(race.x + steer * delta * (20 + ride.grip * 1.6) * (0.3 + race.speed / Math.max(1, topSpeed)), 13, 87);
+    race.player = Math.min(100, race.player + delta * race.speed / 68);
+    race.worldOffset = (race.worldOffset + delta * race.speed * 2.4) % 1000;
+    race.score += delta * race.speed * 0.72;
+    race.nitro = Math.min(100, race.nitro + delta * (1.1 + (Math.abs(steer) && race.speed > 70 ? 3.2 : 0)));
+  }
   if (race.mode === "circuit") race.cpu = Math.min(100, race.cpu + delta * (1.28 + activeDifficulty().aiDamageMultiplier * 0.18));
   if (race.cpuNitro >= 22 && Math.random() < delta * 0.12) {
     race.cpuNitro -= 22;
@@ -1548,8 +1737,8 @@ function updateRace(delta, time) {
   if (time >= race.nextTrafficAt) spawnRaceTraffic();
   race.traffic.forEach((traffic) => {
     traffic.y += delta * (18 + race.speed * 0.38 - traffic.pace * 0.3);
-    traffic.hijackable = traffic.y > 48 && traffic.y < 86 && Math.abs(traffic.x - race.x) < 15;
-    if (!traffic.hit && traffic.y > 66 && traffic.y < 88 && Math.abs(traffic.x - race.x) < 8) {
+    traffic.hijackable = race.onFoot && Math.abs(traffic.y - race.footY) < 14 && Math.abs(traffic.x - race.x) < 14;
+    if (!race.onFoot && !traffic.hit && traffic.y > 66 && traffic.y < 88 && Math.abs(traffic.x - race.x) < 8) {
       traffic.hit = true;
       race.armor -= Math.max(5, 16 - ride.armor);
       race.speed *= 0.42;
@@ -1563,6 +1752,7 @@ function updateRace(delta, time) {
   });
   race.traffic = race.traffic.filter((traffic) => traffic.y < 112 && !traffic.hit);
   race.checkpoint = Math.min(3, Math.floor(race.player / 33.34) + 1);
+  updateWantedStory(delta, time);
   if (race.mode === "free" && race.player >= 100) {
     race.player = 0;
     race.district += 1;
@@ -1572,10 +1762,19 @@ function updateRace(delta, time) {
   }
   if (race.message && time >= race.messageUntil) race.message = "";
   if (time >= race.nextRadioAt) {
-    els.raceRadio.textContent = RACE_RADIO[Math.floor(Math.random() * RACE_RADIO.length)];
+    const wantedRadio = [
+      "Dispatch: maintain distance. Fictional interceptors are moving in.",
+      "Radio: shoulder route blocked. Watch the civilian traffic.",
+      "Aviation: target crossing the neon grid toward North Coast.",
+      "Driver: stars do not reset on the highway. Keep moving.",
+    ];
+    els.raceRadio.textContent = (race.mode === "wanted" ? wantedRadio : RACE_RADIO)[Math.floor(Math.random() * 4)];
     race.nextRadioAt = time + 6500;
   }
-  if (race.armor <= 0) endRace("cpu");
+  if (race.armor <= 0 && race.mode === "wanted" && !race.escapedJail) sendToJail();
+  else if (race.armor <= 0) endRace("cpu");
+  else if (race.mode === "wanted" && race.player >= 100) endRace("player");
+  else if (race.mode === "wanted" && race.seconds <= 0) endRace("cpu");
   else if (race.mode === "free" && race.seconds <= 0) endRace("player");
   else if (race.mode === "circuit" && (race.player >= 100 || race.cpu >= 100 || race.seconds <= 0)) endRace(race.player >= race.cpu ? "player" : "cpu");
   else renderRace();
@@ -1809,9 +2008,10 @@ function attack(sideKey, type) {
   }
 
   const fighter = activeFighter(side);
+  const bladeHeavy = fighter.weapon?.name?.toLowerCase().includes("saber") || fighter.title?.toLowerCase().includes("blade");
   const specs = {
-    light: { name: "Light Strike", damage: 4, chip: .6, range: 17, duration: 280, cooldown: 320, hitDelay: 65, color: fighter.color, knockback: 1.2, knockdown: 0 },
-    heavy: { name: "Heavy Strike", damage: 7.5, chip: 1.1, range: 24, duration: 430, cooldown: 500, hitDelay: 115, color: "#ffd400", knockback: 4.2, knockdown: 520 },
+    light: { name: "Quick Punch", damage: 4, chip: .6, range: 17, duration: 280, cooldown: 320, hitDelay: 65, color: fighter.color, knockback: 1.2, knockdown: 0 },
+    heavy: { name: bladeHeavy ? "Blade Heavy" : "Power Kick", damage: 7.5, chip: 1.1, range: 24, duration: 430, cooldown: 500, hitDelay: 115, color: "#ffd400", knockback: 4.2, knockdown: 520 },
     special: { ...fighter.signature, range: 100, duration: 680, cooldown: 880, hitDelay: fighter.weapon.kind === "beam" ? 130 : 335, knockback: 7.5, knockdown: 760 },
   };
   const move = specs[type];
@@ -1827,6 +2027,7 @@ function attack(sideKey, type) {
   broadcastCombatEvent(type, sideKey);
 
   if (type === "special") createProjectile(sideKey, move.color, fighter.weapon);
+  createAttackAfterimage(sideKey, type, fighter);
   window.setTimeout(() => {
     if (state.matchId !== matchId || !state.inBattle || state.finished) return;
     resolveAttackHit(sideKey, type, move, fighter);
@@ -1837,6 +2038,17 @@ function attack(sideKey, type) {
       resolveWeaponRecall(sideKey, fighter.weapon);
     }, 560);
   }
+}
+
+function createAttackAfterimage(sideKey, type, fighter) {
+  const fighterEl = sideKey === "player" ? els.playerFighter : els.cpuFighter;
+  if (!fighterEl || window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+  const trail = document.createElement("span");
+  trail.className = `fighter-afterimage afterimage-${type}`;
+  trail.style.backgroundImage = `url("${fighter.sprite}")`;
+  trail.style.backgroundPosition = type === "light" ? "66.667% 0" : type === "heavy" ? "100% 0" : "0 100%";
+  fighterEl.append(trail);
+  window.setTimeout(() => trail.remove(), type === "special" ? 520 : 360);
 }
 
 function resolveWeaponRecall(sideKey, weapon) {
@@ -2357,6 +2569,13 @@ function renderSide(sideKey, force = false) {
   if (force || spriteEl.dataset.fighter !== fighter.id) {
     spriteEl.style.backgroundImage = `url("${fighter.sprite}")`;
     spriteEl.classList.toggle("is-wallet-skin", fighter.walletSkin === true);
+    if (fighter.walletSkin) {
+      spriteEl.style.setProperty("--wallet-art", `url("${fighter.walletArt || fighter.image}")`);
+      spriteEl.style.setProperty("--wallet-mask", `url("${fighter.sprite}")`);
+    } else {
+      spriteEl.style.removeProperty("--wallet-art");
+      spriteEl.style.removeProperty("--wallet-mask");
+    }
     spriteEl.setAttribute("aria-label", `${fighter.name}, ${pose} pose`);
     spriteEl.dataset.fighter = fighter.id;
     portraitEl.src = fighter.image;
@@ -2400,7 +2619,7 @@ function endMatch(winner, reason, options = {}) {
   const localWon = state.matchMode === "online" && state.online.role === "guest" ? winner === "cpu" : winner === "player";
   duckMusic(0.12);
   if (reason === "KO") {
-    announce("Fatality!", "fatality");
+    announce("K.T.O.!", "fatality");
     triggerArenaImpact("hard");
     cinematicFx.burst(loserSide.x, 63, "hard", "#ff281e");
   } else {
@@ -2426,7 +2645,9 @@ function endMatch(winner, reason, options = {}) {
     if (state.matchId !== matchId) return;
     const resultMode = state.matchMode === "cpu" ? activeDifficulty().name : "Online rival";
     els.resultLabel.textContent = `${reason} / ${STAGES[state.stageIndex].name} / ${resultMode}`;
-    els.resultTitle.textContent = localWon ? "Victory" : "Defeat";
+    els.resultTitle.textContent = reason === "KO"
+      ? (localWon ? "K.T.O. Victory" : "K.T.O. Defeat")
+      : (localWon ? "Victory" : "Defeat");
     els.resultTitle.style.color = localWon ? "var(--green)" : "var(--magenta)";
     els.resultDetail.textContent = `Final team health: ${localTotal}% to ${rivalTotal}%. +${earnedMastery} mastery XP${rewardMultiplier !== 1 ? ` (${rewardMultiplier}× round bonus)` : ""} / Level ${masteryLevel()}. ${localWon ? "Your tag team held the arena." : "Your rival broke your guard."}`;
     $("span", els.rematchButton).textContent = state.matchMode === "online" && state.online.role === "guest" ? "Waiting for host" : "Run it back";
@@ -2465,6 +2686,7 @@ function returnToSelect(options = {}) {
   els.raceScreen.hidden = true;
   els.raceGarage.hidden = true;
   els.selectScreen.hidden = false;
+  els.universeShell.hidden = false;
   state.online.localReady = false;
   state.online.remoteReady = false;
   if (state.matchMode === "online" && state.online.connected) sendOnline({ type: "ready", ready: false });
@@ -3600,11 +3822,17 @@ window.__combatDebug = Object.freeze({
     race: {
       active: state.race.active,
       garage: state.race.garage,
+      mode: state.race.mode,
       ride: STREET_RIDES[state.race.rideIndex]?.name || "",
       speed: Math.round(state.race.speed || 0),
       x: Math.round(state.race.x || 0),
       traffic: state.race.traffic?.length || 0,
       nitro: Math.round(state.race.nitro || 0),
+      wantedStage: state.race.wantedStage || 0,
+      jailed: Boolean(state.race.jailed),
+      jailbreak: state.race.jailbreak || 0,
+      onFoot: Boolean(state.race.onFoot),
+      footY: Math.round(state.race.footY || 0),
     },
   }),
   mapGamepadInput,
@@ -3623,11 +3851,20 @@ function gameLoop(time) {
 
 function handleKeyDown(event) {
   if (state.race.active) {
-    if (["KeyW", "ArrowUp", "KeyJ", "KeyQ", "KeyA", "KeyD", "KeyS", "ArrowDown", "KeyE"].includes(event.code)) event.preventDefault();
+    if (state.race.jailed) {
+      if (!event.repeat && (event.code === "Enter" || event.code === "Space" || event.code === "KeyE")) {
+        event.preventDefault();
+        attemptJailbreak();
+      }
+      if (event.code === "Escape") returnToSelect();
+      return;
+    }
+    if (["KeyW", "ArrowUp", "KeyJ", "KeyQ", "KeyA", "KeyD", "KeyS", "ArrowDown", "KeyE", "ShiftLeft", "ShiftRight"].includes(event.code)) event.preventDefault();
     if (event.code === "KeyW" || event.code === "ArrowUp" || event.code === "KeyJ") state.race.keys.throttle = true;
     if (event.code === "KeyS" || event.code === "ArrowDown") state.race.keys.brake = true;
     if (event.code === "KeyA") state.race.keys.left = true;
     if (event.code === "KeyD") state.race.keys.right = true;
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight") state.race.keys.sprint = true;
     if (!event.repeat && (event.code === "KeyW" || event.code === "ArrowUp" || event.code === "KeyJ")) raceAction("accelerate");
     if (!event.repeat && event.code === "KeyA") state.race.x = Math.max(13, state.race.x - 4);
     if (!event.repeat && event.code === "KeyD") state.race.x = Math.min(87, state.race.x + 4);
@@ -3686,6 +3923,7 @@ function handleKeyUp(event) {
     if (event.code === "KeyS" || event.code === "ArrowDown") state.race.keys.brake = false;
     if (event.code === "KeyA") state.race.keys.left = false;
     if (event.code === "KeyD") state.race.keys.right = false;
+    if (event.code === "ShiftLeft" || event.code === "ShiftRight") state.race.keys.sprint = false;
     return;
   }
   if (event.code === "KeyA") setPlayerKey("left", false);
@@ -3741,6 +3979,8 @@ els.fightButton.addEventListener("click", () => state.matchMode === "online" ? s
 els.raceButton.addEventListener("click", openRaceGarage);
 els.garageStartButton.addEventListener("click", () => startRace({ freeDrive: false }));
 els.garageFreeDriveButton.addEventListener("click", () => startRace({ freeDrive: true }));
+els.garageWantedButton.addEventListener("click", () => startRace({ wantedStory: true }));
+els.jailbreakButton.addEventListener("click", attemptJailbreak);
 els.garageBackButton.addEventListener("click", returnToSelect);
 els.quitRaceButton.addEventListener("click", returnToSelect);
 els.pauseButton.addEventListener("click", () => requestPause(true));
@@ -3776,6 +4016,12 @@ document.addEventListener("keydown", () => unlockAudio(), { once: true, capture:
 bindAudioControls();
 bindOnlineControls();
 initializeSelection();
+const launchParams = new URLSearchParams(window.location.search);
+const launchRace = launchParams.get("race");
+if (launchParams.get("online") === "1") setGameMode("online");
+if (launchParams.get("wanted") === "1" || launchRace === "wanted") window.setTimeout(() => startRace({ wantedStory: true }), 120);
+else if (launchRace === "free") window.setTimeout(() => startRace({ freeDrive: true }), 120);
+else if (launchRace === "circuit") window.setTimeout(() => startRace({ freeDrive: false }), 120);
 FIGHTERS.forEach((fighter) => {
   const image = new Image();
   image.src = fighter.sprite;

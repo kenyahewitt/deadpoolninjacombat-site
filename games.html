@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#050006">
+  <meta name="description" content="DNTC Game Vault — original and properly licensed browser games with wallet-ready checkout.">
+  <title>DNTC Game Vault</title>
+  <link rel="canonical" href="https://deadpoolninjacombat.store/games.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="games.css?v=20261016-action-1">
+  <script src="games.js?v=20261016-action-1" defer></script>
+</head>
+<body>
+  <header class="vault-header">
+    <a class="vault-brand" href="index.html"><i>DNTC</i><span>Game Vault</span></a>
+    <nav aria-label="Primary">
+      <a href="index.html#selectScreen">Combat</a>
+      <a href="index.html?race=wanted#raceScreen">Wanted</a>
+      <a class="active" href="games.html">Game Vault</a>
+      <a href="marketplace.html">NFT Market</a>
+    </nav>
+    <button id="connectSolana" type="button"><span class="wallet-dot"></span><b>Connect Solana</b></button>
+  </header>
+
+  <main>
+    <section class="vault-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Every listed mode is playable now · combat + driving</p>
+        <h1>Coast City<br><em>Escape</em></h1>
+        <p>Pick a ride. Clear the neon cordon. Survive a five-star pursuit and break out of a fictional arcade detention event before the safehouse closes.</p>
+        <div class="hero-actions">
+          <a class="play-button" href="index.html?race=wanted#raceScreen">Play story now</a>
+          <button class="buy-button" type="button" data-buy="coast-city-escape">Buy download · $5 USD in SOL</button>
+        </div>
+        <ul><li>Keyboard, touch + controller</li><li>Five story chapters</li><li>Original browser game</li></ul>
+      </div>
+      <div class="hero-art" aria-label="Neon Coast City pursuit artwork">
+        <img src="assets/concepts/coast-city-wanted-concept.png" alt="A fictional neon coastal driving game with a five-star wanted HUD">
+        <span>Now playable</span>
+      </div>
+    </section>
+
+    <section class="catalog" aria-labelledby="catalogTitle">
+      <div class="section-title"><div><span>Playable releases</span><h2 id="catalogTitle">Choose your next run</h2></div><p>Every card launches a working mode. Paid downloads remain locked until their treasury and distribution license are verified.</p></div>
+      <div class="game-grid" id="gameGrid"></div>
+    </section>
+
+    <section class="wallet-panel" id="walletPanel">
+      <div><span>Solana checkout</span><h2>One wallet. Clear receipts.</h2><p>Connect a compatible Solana wallet to prepare checkout. The store displays the exact SOL amount and destination before any transaction.</p></div>
+      <div class="wallet-state"><b id="walletState">Not connected</b><small id="walletAddress">No wallet permission requested.</small><button id="panelConnect" type="button">Connect wallet</button></div>
+    </section>
+
+    <section class="legal-rail">
+      <strong>Legal game library only.</strong>
+      <p>This vault does not jailbreak consoles, bypass copy protection, or sell copyrighted game files without permission. RetroArch is emulator software, not a source of games, BIOS, firmware, or keys. Use only content you own or are licensed to use.</p>
+      <a href="https://github.com/mihawk-99/PS5_RetroArch" target="_blank" rel="noopener noreferrer">Read the PS5 RetroArch project notice ↗</a>
+    </section>
+  </main>
+
+  <dialog id="checkoutDialog">
+    <button class="dialog-close" id="closeCheckout" type="button" aria-label="Close">×</button>
+    <span class="dialog-kicker">Protected checkout</span>
+    <h2 id="checkoutTitle">Game download</h2>
+    <p id="checkoutCopy"></p>
+    <dl><div><dt>Price</dt><dd>$5 USD in SOL</dd></div><div><dt>Network</dt><dd>Solana</dd></div><div><dt>Delivery</dt><dd>License-gated download</dd></div></dl>
+    <button class="dialog-action" id="checkoutAction" type="button">Connect Solana wallet</button>
+    <small>No transaction is sent unless a verified creator treasury and licensed download are configured.</small>
+  </dialog>
+
+  <footer><a href="index.html">DNTC Combat</a><span>Original games. Verifiable licenses. Player-controlled wallets.</span><a href="terms.html">Terms</a></footer>
+</body>
+</html>

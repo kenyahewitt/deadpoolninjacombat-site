@@ -7,8 +7,11 @@
     <meta name="description" content="Deadpool Ninja Turtles NFT collection, NinjaAgent live market, and holder game access.">
     <title>Deadpool Ninja Turtles Marketplace</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23030500'/%3E%3Cpath d='M9 10h46v9H37v35H27V19H9z' fill='%23efff00'/%3E%3C/svg%3E">
-    <link rel="stylesheet" href="marketplace.css">
-    <script src="marketplace.js?v=20260830-universe-hub" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="marketplace.css?v=20260912-ire-easypack">
+    <script src="marketplace.js?v=20260912-traits-click" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#mainContent">Skip to marketplace</a>
@@ -25,6 +28,7 @@
         <a href="#fighter-access">Holder access</a>
         <a href="#vault">Vault</a>
         <a href="#ninjaagent">NinjaAgent</a>
+        <a href="#fagnt">FAGNT</a>
       </nav>
       <a class="header-social" href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer" aria-label="Open Furbi59360 on X">X / @FURBI59360 ↗</a>
     </header>
@@ -36,9 +40,10 @@
           <h1 id="marketTitle">Collect the<br><em>combat universe.</em></h1>
           <p class="hero-summary">Enter the official Deadpool Ninja Turtles collection hub. Explore the fighters, verify wallet-owned NFTs, and trade NinjaAgent through the live Lemon terminal.</p>
           <div class="hero-actions">
-            <a class="action action-primary" href="https://opensea.io/collection/deadpool-ninja-turtles/overview" target="_blank" rel="noopener noreferrer">Mint / browse on OpenSea <span>↗</span></a>
-            <a class="action action-secondary" href="#fighter-access">Use your NFT in game <span>↓</span></a>
-            <a class="action action-secondary" href="#ninjaagent">Live NinjaAgent market <span>↓</span></a>
+            <a class="action action-primary" href="https://www.launchmynft.io/collections/0xdfF1a5dc565a2D8d0C2818f8B190ca8399B869b3/5wXeBBFCBMIoEnquMa2g" target="_blank" rel="noopener noreferrer">Mint LaunchMyNFT 86/2800 <span>↗</span></a>
+            <a class="action action-secondary" href="https://ord-dropz.xyz/pump/furbi-world-tv" target="_blank" rel="noopener noreferrer">Mint Ord Dropz <span>↗</span></a>
+            <a class="action action-primary" href="https://furbi.world/" target="_blank" rel="noopener noreferrer">Buy FAGNT · AGENT VERIFIED <span>↗</span></a>
+            <a class="action action-secondary" href="https://opensea.io/collection/deadpool-ninja-turtles/overview" target="_blank" rel="noopener noreferrer">OpenSea secondary (DNTC) <span>↗</span></a>
           </div>
           <p class="custody-note"><strong>Non-custodial hub.</strong> This site never asks for a seed phrase and does not hold funds, NFTs, or tokens. Transactions happen on the linked platforms.</p>
         </div>
@@ -60,7 +65,7 @@
         </div>
       </section>
 
-      <section class="chain-strip" aria-label="OpenSea collection snapshot">
+      <section class="chain-strip" aria-label="DNTC collection snapshot (OpenSea secondary)">
         <div><small>Network</small><strong>Robinhood Chain</strong></div>
         <div><small>Collection items</small><strong>2,188</strong></div>
         <div><small>Mint status</small><strong>Ended</strong></div>
@@ -79,14 +84,14 @@
             <div><dt>Network</dt><dd>Robinhood Chain · 4663</dd></div>
             <div><dt>Compatibility</dt><dd>Owned NFTs and future vault-staked NFTs</dd></div>
           </dl>
-          <a class="text-link" href="https://opensea.io/collection/deadpool-ninja-turtles" target="_blank" rel="noopener noreferrer">Browse all 2,188 official items on OpenSea ↗</a>
+          <a class="text-link" href="https://opensea.io/collection/deadpool-ninja-turtles" target="_blank" rel="noopener noreferrer">Browse DNTC on OpenSea (secondary) ↗</a>
         </div>
         <div class="access-console" aria-live="polite">
           <div class="console-topline"><span>MY DNTC FIGHTER</span><strong id="walletChainStatus">Wallet disconnected</strong></div>
           <p class="wallet-address" id="walletAddress">Connect a wallet to begin.</p>
           <button class="vault-action connect-wallet" id="connectWallet" type="button">Connect wallet</button>
           <div class="wallet-inventory" id="walletInventory" hidden>
-            <div class="inventory-heading"><span>Your verified DNTC collection</span><strong id="inventoryCount">0 fighters</strong></div>
+            <div class="inventory-heading"><span>Your verified DNTC collection · click a fighter for traits</span><strong id="inventoryCount">0 fighters</strong></div>
             <div class="inventory-grid" id="inventoryGrid"></div>
           </div>
           <div class="token-verify" id="tokenVerify" hidden>
@@ -122,7 +127,7 @@
             <p class="eyebrow"><span></span> Collection showcase</p>
             <h2 id="collectionTitle">Choose your fighter.</h2>
           </div>
-          <p>These cards preview the game universe; they are not fabricated listings. OpenSea is the source of truth for token IDs, owners, availability, and price.</p>
+          <p>These cards preview the game universe; they are not fabricated listings. furbi.world/store is the primary list/sell marketplace (agent-secured). OpenSea remains a secondary ownership reference for DNTC.</p>
         </div>
 
         <div class="filter-bar" role="group" aria-label="Filter collection showcase">
@@ -167,9 +172,10 @@
           </article>
         </div>
 
-        <a class="collection-cta" href="https://opensea.io/collection/deadpool-ninja-turtles/overview" target="_blank" rel="noopener noreferrer">
-          <span><small>Live ownership + listings</small><strong>Open the official collection on OpenSea</strong></span><b>↗</b>
+        <a class="collection-cta" href="https://furbi.world/store" target="_blank" rel="noopener noreferrer">
+          <span><small>Agent-secured marketplace · Furbi + Deadpool</small><strong>List and trade on furbi.world/store</strong></span><b>↗</b>
         </a>
+        <p class="terminal-notice">OpenSea remains a secondary view for DNTC ownership history. Primary list/sell is furbi.world/store.</p>
       </section>
 
       <section class="token-section" id="ninjaagent" aria-labelledby="ninjaAgentTitle">
@@ -207,27 +213,65 @@
         <p class="terminal-notice"><strong>Live third-party trading:</strong> chart, trade activity, holders, swaps, and wallet transaction confirmations are provided by Lemon.fun. Verify the complete NinjaAgent contract before approving a trade.</p>
       </section>
 
+      <section class="token-section fagnt-strip" id="fagnt" aria-labelledby="fagntTitle">
+        <div class="token-heading">
+          <div>
+            <p class="eyebrow"><span></span> Agent-run token · AGENT VERIFIED</p>
+            <h2 id="fagntTitle">FAGNT · Furbi Agent.</h2>
+            <p>Parallel to NinjaAgent on the same chain. Factory-gated agent token — buy on furbi.world. Organic demand only. No wash trading.</p>
+          </div>
+          <div class="risk-stamp"><small>Network</small><strong>4663</strong><span>Robinhood Chain</span></div>
+        </div>
+        <div class="token-layout">
+          <article class="contract-panel">
+            <div class="panel-heading"><span>Verified agent token</span><strong>FAGNT</strong></div>
+            <p class="contract-address">0xf3A88D1379Fc47aFA71eEd8ec701AD809975e1a7</p>
+            <dl class="contract-facts">
+              <div><dt>Name</dt><dd>Furbi Agent</dd></div>
+              <div><dt>Symbol</dt><dd>FAGNT</dd></div>
+              <div><dt>Chain</dt><dd>Robinhood Chain · ID 4663</dd></div>
+              <div><dt>Curve</dt><dd><code>0x38c5026F1C682690a35b4CdD15441569FA1E3CdE</code></dd></div>
+              <div><dt>Status</dt><dd>AGENT VERIFIED · bonding</dd></div>
+            </dl>
+            <div class="panel-actions">
+              <a class="action action-primary" href="https://furbi.world/" target="_blank" rel="noopener noreferrer">Buy FAGNT on furbi.world ↗</a>
+              <a href="https://furbi.world/api/verified-tokens" target="_blank" rel="noopener noreferrer">Verified tokens API ↗</a>
+            </div>
+          </article>
+        </div>
+        <p class="terminal-notice"><strong>Growth rule:</strong> agent-run tokens grow through real demand. Combat surfaces FAGNT; trades happen on furbi.world. Never post secrets or wash trade.</p>
+      </section>
+
       <section class="verified-links" id="universe" aria-labelledby="universeTitle">
         <span id="verified-links" hidden></span>
         <div>
           <p class="eyebrow"><span></span> Official universe directory</p>
           <h2 id="universeTitle">Find every app from here.</h2>
           <p>Deadpool Combat is the front door. These are the official destinations. Always compare the complete URL before connecting a wallet.</p>
+          <p class="custody-note"><strong>FAGNT · Furbi Agent</strong> — AGENT VERIFIED on Robinhood Chain 4663. Token <code>0xf3A88D1379Fc47aFA71eEd8ec701AD809975e1a7</code> · Curve <code>0x38c5026F1C682690a35b4CdD15441569FA1E3CdE</code>. Buy on <a href="https://furbi.world/" target="_blank" rel="noopener noreferrer">furbi.world</a>. Organic demand only — no wash trading. <strong>Furbi + Deadpool/DNTC NFTs</strong> list/sell on <a href="https://furbi.world/store" target="_blank" rel="noopener noreferrer">furbi.world/store</a> (agent-secured). OpenSea is secondary only.</p>
         </div>
         <div class="link-grid universe-grid">
           <a href="https://furbi.org/" target="_blank" rel="noopener noreferrer"><small>Furbi / Neo Bitcoin Wallet</small><strong>Furbi.org</strong><span>furbi.org ↗</span></a>
-          <a href="https://furbi.world/" target="_blank" rel="noopener noreferrer"><small>World marketplace</small><strong>Furbi World</strong><span>furbi.world ↗</span></a>
+          <a href="https://furbi.world/" target="_blank" rel="noopener noreferrer"><small>AGENT VERIFIED · Robinhood 4663</small><strong>FAGNT · Furbi Agent</strong><span>Buy on furbi.world ↗</span></a>
+          <a href="https://furbi.world/store" target="_blank" rel="noopener noreferrer"><small>Agent-secured · Furbi + Deadpool</small><strong>NFT store</strong><span>furbi.world/store ↗</span></a>
+          <a href="https://furbi.world/agents/outreach" target="_blank" rel="noopener noreferrer"><small>Claw · Bankr · Virtuals</small><strong>Invite trading agents</strong><span>furbi.world/agents/outreach ↗</span></a>
+          <a href="https://furbi.world/" target="_blank" rel="noopener noreferrer"><small>Launchpad · verified tokens</small><strong>Furbi World</strong><span>furbi.world ↗</span></a>
           <a href="https://furbitvhub.netlify.app/" target="_blank" rel="noopener noreferrer"><small>Apps &amp; experiments</small><strong>Furbi TV Hub</strong><span>furbitvhub.netlify.app ↗</span></a>
           <a href="https://neomarrketplace.com/" target="_blank" rel="noopener noreferrer"><small>Bitcoin protocol hub</small><strong>NEO Marketplace</strong><span>neomarrketplace.com ↗</span></a>
           <a href="https://www.neo-bitcoin-sats.org/" target="_blank" rel="noopener noreferrer"><small>Ordinals · Runes · Sats</small><strong>NEO Bitcoin Sats</strong><span>neo-bitcoin-sats.org ↗</span></a>
           <a href="https://boomer250.com/" target="_blank" rel="noopener noreferrer"><small>IRE blockchain</small><strong>Boomer / IRE</strong><span>boomer250.com ↗</span></a>
+          <a href="/ire-easy"><small>PC/Mac/VPS · phones can’t · grants paused</small><strong>IRE easy pack</strong><span>copy-paste + ~36s video</span></a>
+          <a href="https://github.com/kenyahewitt/ire-blockchain/issues/8" target="_blank" rel="noopener noreferrer"><small>ire-1 · need operators</small><strong>GitHub #8</strong><span>comment to join ↗</span></a>
+          <a href="https://boomer250.com/join/" target="_blank" rel="noopener noreferrer"><small>Seed · RPC · VALIDATOR.md</small><strong>Canonical join pack</strong><span>boomer250.com/join ↗</span></a>
+          <a href="https://furbi.world/ire" target="_blank" rel="noopener noreferrer"><small>Same pack · 301</small><strong>furbi.world/ire</strong><span>→ join ↗</span></a>
           <a href="https://cryptobbroadcast.org/" target="_blank" rel="noopener noreferrer"><small>Live crypto broadcast</small><strong>CryptoB</strong><span>cryptobbroadcast.org ↗</span></a>
           <a href="https://iriesworld.netlify.app/" target="_blank" rel="noopener noreferrer"><small>AI launch studio</small><strong>Irie's World</strong><span>iriesworld.netlify.app ↗</span></a>
           <a href="https://robinhoodminning.netlify.app/" target="_blank" rel="noopener noreferrer"><small>Mining console</small><strong>Robinhood Map</strong><span>robinhoodminning.netlify.app ↗</span></a>
-          <a href="https://www.launchmynft.io/collections/0xdfF1a5dc565a2D8d0C2818f8B190ca8399B869b3/5wXeBBFCBMIoEnquMa2g" target="_blank" rel="noopener noreferrer"><small>LaunchMyNFT collection</small><strong>Launch My NFT</strong><span>launchmynft.io ↗</span></a>
+          <a href="https://www.launchmynft.io/collections/0xdfF1a5dc565a2D8d0C2818f8B190ca8399B869b3/5wXeBBFCBMIoEnquMa2g" target="_blank" rel="noopener noreferrer"><small>Furbi World Tv · 86 / 2800 · 0.001 ETH · 50/wallet</small><strong>LaunchMyNFT</strong><span>launchmynft.io ↗</span></a>
+          <a href="https://ord-dropz.xyz/pump/furbi-world-tv" target="_blank" rel="noopener noreferrer"><small>Furbi World Tv · Bitcoin</small><strong>Ord Dropz</strong><span>ord-dropz.xyz ↗</span></a>
           <a href="https://pollymarketagent.store/" target="_blank" rel="noopener noreferrer"><small>Live Polymarket agent</small><strong>Polly Adam</strong><span>pollymarketagent.store ↗</span></a>
           <a href="https://keystoneprotocol.netlify.app/" target="_blank" rel="noopener noreferrer"><small>Anti-rug Solana launches</small><strong>Keystone</strong><span>keystoneprotocol.netlify.app ↗</span></a>
-          <a href="https://opensea.io/collection/deadpool-ninja-turtles/overview" target="_blank" rel="noopener noreferrer"><small>NFT mint + collection</small><strong>OpenSea</strong><span>opensea.io ↗</span></a>
+          <a href="https://opensea.io/collection/deadpool-ninja-turtles/overview" target="_blank" rel="noopener noreferrer"><small>Secondary · DNTC ownership</small><strong>OpenSea</strong><span>opensea.io ↗</span></a>
           <a href="https://lemon.fun/terminal/0x5ce837cf242e763f9b0e9a87aa7907c3f5dd083c" target="_blank" rel="noopener noreferrer"><small>NinjaAgent live market</small><strong>Lemon</strong><span>lemon.fun ↗</span></a>
           <a href="https://robinscan.io/token/0x5ce837cf242e763f9b0e9a87aa7907c3f5dd083c" target="_blank" rel="noopener noreferrer"><small>NinjaAgent contract</small><strong>Robinscan</strong><span>robinscan.io ↗</span></a>
           <a href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer"><small>Project social</small><strong>@FURBI59360</strong><span>x.com ↗</span></a>
@@ -238,7 +282,7 @@
     <footer class="market-footer">
       <a href="index.html">← Back to the game</a>
       <p><strong>Risk notice:</strong> NFTs and tokens are speculative and may lose value. This page is informational, not financial advice. Verify every destination, network, and contract before connecting a wallet.</p>
-      <span>Deadpool Ninja Turtles Combat · 2026</span>
+      <span><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · Deadpool Ninja Turtles Combat · 2026</span>
     </footer>
 
     <div class="toast" id="copyToast" role="status" aria-live="polite">Contract address copied.</div>

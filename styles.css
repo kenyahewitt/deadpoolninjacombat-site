@@ -1,17 +1,17 @@
 :root {
-  --ink: #030805;
-  --ink-soft: #08120d;
-  --surface: rgba(7, 17, 12, 0.92);
-  --green: #49ff12;
-  --green-rgb: 73, 255, 18;
-  --yellow: #ffd400;
+  --ink: #000000;
+  --ink-soft: #0a0a0a;
+  --surface: rgba(10, 10, 10, 0.92);
+  --green: #c8ff00;
+  --green-rgb: 200, 255, 0;
+  --yellow: #c8ff00;
   --magenta: #ff008e;
   --cyan: #20dcff;
   --orange: #ff6a00;
-  --white: #f4fff1;
-  --muted: #9cb0a1;
-  --border: rgba(73, 255, 18, 0.34);
-  --font-display: "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --white: #ffffff;
+  --muted: #a3a3a3;
+  --border: rgba(255, 255, 255, 0.22);
+  --font-display: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color-scheme: dark;
   font-family: var(--font-body);
@@ -34,9 +34,7 @@ body {
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(var(--green-rgb), 0.08), transparent 34rem),
-    var(--ink);
+  background: #000;
 }
 
 button,
@@ -67,11 +65,14 @@ button:focus-visible,
   display: flex;
   flex-direction: column;
   position: relative;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(var(--green-rgb), 0.08), transparent 34rem),
+    var(--ink);
 }
 
 .select-screen::before {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   pointer-events: none;
   opacity: 0.2;
@@ -104,7 +105,7 @@ button:focus-visible,
 .brand-mark span {
   display: grid;
   place-items: center;
-  font: italic 900 clamp(19px, 2.1vw, 32px)/1 var(--font-display);
+  font: 800 clamp(19px, 2.1vw, 32px)/1 var(--font-display);
   color: var(--ink);
   background: var(--green);
   border: 1px solid var(--ink);
@@ -117,7 +118,7 @@ button:focus-visible,
 .select-header h1 {
   max-width: 1000px;
   margin: 0;
-  font: italic 900 clamp(38px, 6vw, 88px)/0.88 var(--font-display);
+  font: 800 clamp(38px, 6vw, 88px)/0.88 var(--font-display);
   letter-spacing: -0.035em;
   text-transform: uppercase;
 }
@@ -145,18 +146,18 @@ button:focus-visible,
 .marketplace-link {
   min-width: 142px;
   padding: 10px 16px 9px;
-  border: 1px solid var(--yellow);
-  color: var(--yellow);
+  border: 1px solid #ffffff;
+  color: #ffffff;
   text-decoration: none;
   text-transform: uppercase;
-  transform: skew(-4deg);
+  transform: none;
   transition: 160ms ease;
 }
 
 .marketplace-link span,
 .marketplace-link strong {
   display: block;
-  transform: skew(4deg);
+  transform: none;
 }
 
 .marketplace-link span {
@@ -167,14 +168,14 @@ button:focus-visible,
 
 .marketplace-link strong {
   margin-top: 3px;
-  font: italic 900 17px/1 var(--font-display);
+  font: 800 17px/1 var(--font-display);
   letter-spacing: 0.07em;
 }
 
 .marketplace-link:hover {
-  background: var(--yellow);
-  color: var(--ink);
-  box-shadow: 0 0 22px rgba(255, 212, 0, 0.18);
+  background: #ffffff;
+  color: #000;
+  box-shadow: none;
 }
 
 .marketplace-link:hover span { color: var(--ink); }
@@ -192,7 +193,7 @@ button:focus-visible,
 }
 
 .select-footer a {
-  color: var(--yellow);
+  color: #ffffff;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -986,16 +987,36 @@ button:focus-visible,
 .fighter-sprite[data-pose="hit"] { background-position: 66.667% 100%; }
 .fighter-sprite[data-pose="tag"] { background-position: 100% 100%; }
 
-/* Wallet fighters use the exact selected NFT artwork instead of borrowing a
-   built-in character's sprite sheet. The existing combat transforms still
-   animate movement, strikes, blocks, hits, dashes, and knockdowns. */
-.fighter-sprite.is-wallet-skin,
-.fighter-sprite.is-wallet-skin[data-pose] {
-  background-position: center bottom;
-  background-repeat: no-repeat;
-  background-size: contain;
-  border-radius: 8%;
+/* A wallet-selected NFT stays the visible identity while its deterministic
+   fighter chassis supplies real idle, step, punch, kick, block, hit and win
+   silhouettes. The NFT art is color-textured through the active pose mask,
+   so it never becomes a rectangular card sliding across the arena. */
+.fighter-sprite.is-wallet-skin { position: relative; overflow: visible; }
+.fighter-sprite.is-wallet-skin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--wallet-art) center/cover no-repeat;
+  mix-blend-mode: color;
+  opacity: .52;
+  pointer-events: none;
+  -webkit-mask-image: var(--wallet-mask);
+  -webkit-mask-size: 400% 200%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: 0 0;
+  mask-image: var(--wallet-mask);
+  mask-size: 400% 200%;
+  mask-repeat: no-repeat;
+  mask-position: 0 0;
+  filter: saturate(1.45) brightness(1.08);
 }
+.fighter-sprite.is-wallet-skin[data-pose="step"]::after { -webkit-mask-position:33.333% 0; mask-position:33.333% 0; }
+.fighter-sprite.is-wallet-skin[data-pose="light"]::after { -webkit-mask-position:66.667% 0; mask-position:66.667% 0; }
+.fighter-sprite.is-wallet-skin[data-pose="heavy"]::after { -webkit-mask-position:100% 0; mask-position:100% 0; }
+.fighter-sprite.is-wallet-skin[data-pose="special"]::after { -webkit-mask-position:0 100%; mask-position:0 100%; }
+.fighter-sprite.is-wallet-skin[data-pose="block"]::after { -webkit-mask-position:33.333% 100%; mask-position:33.333% 100%; }
+.fighter-sprite.is-wallet-skin[data-pose="hit"]::after { -webkit-mask-position:66.667% 100%; mask-position:66.667% 100%; }
+.fighter-sprite.is-wallet-skin[data-pose="tag"]::after { -webkit-mask-position:100% 100%; mask-position:100% 100%; }
 
 .fighter-shadow {
   width: 95%;
@@ -1453,9 +1474,9 @@ kbd { min-width: 20px; padding: 4px 6px; display: inline-block; margin-right: 3p
 .garage-ride-rail button.is-selected { border-color: #49ff12; color: #49ff12; box-shadow: inset 0 0 18px rgba(73,255,18,.2), 0 0 12px rgba(73,255,18,.26); }
 .garage-ride-rail i { display: block; min-height: 58px; background: url("assets/race/vehicle-sheet-v2.png") var(--car-x) var(--car-y)/300% 300%; }
 .garage-ride-rail span { overflow: hidden; padding: 3px; font: italic 900 7px/1.15 var(--font-display); text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
-.garage-actions { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 10px 5%; background: rgba(0,0,0,.88); }
+.garage-actions { position: relative; z-index: 1; display: grid; grid-template-columns: 1.35fr 1fr 1fr 1fr; gap: 12px; padding: 10px 5%; background: rgba(0,0,0,.88); }
 .garage-actions button { border: 1px solid currentColor; background: rgba(0,0,0,.78); cursor: pointer; font: italic 900 clamp(17px,2vw,28px)/1 var(--font-display); text-transform: uppercase; clip-path: polygon(4% 0,100% 0,96% 100%,0 100%); }
-.garage-start { color: #49ff12; }.garage-free { color:#20dcff; }.garage-back { color: #ff28ad; }
+.garage-wanted { color:#ffd400; background:linear-gradient(90deg,rgba(255,40,173,.2),rgba(255,212,0,.12))!important; box-shadow:0 0 22px rgba(255,40,173,.22); }.garage-start { color: #49ff12; }.garage-free { color:#20dcff; }.garage-back { color: #ff28ad; }
 
 .race-screen { padding: 0; }
 .race-shell { width: min(100%, 177.78vh); aspect-ratio: 16/9; max-height: 100vh; grid-template-rows: 14% 1fr 8%; border-color: rgba(255,40,173,.7); background: #000; }
@@ -1481,6 +1502,13 @@ kbd { min-width: 20px; padding: 4px 6px; display: inline-block; margin-right: 3p
 .traffic-car span { position: absolute; left: 50%; top: 80%; transform: translateX(-50%); display: none; padding: 3px 6px; background: #000; color: #fff; font: 900 7px/1 var(--font-body); white-space: nowrap; text-transform: uppercase; }
 .traffic-car.is-hijackable { filter: drop-shadow(0 0 12px #ffd400) brightness(1.35); }
 .traffic-car.is-hijackable span { display: block; color: #ffd400; border: 1px solid #ffd400; }
+.race-runner { position:absolute; z-index:7; width:clamp(92px,11vw,168px); height:37%; transform:translate(-50%,-50%); filter:drop-shadow(0 13px 13px rgba(0,0,0,.86)) drop-shadow(0 0 8px #49ff12); pointer-events:none; }
+.race-runner[hidden] { display:none !important; }
+.race-runner i { display:block; width:100%; height:100%; background-repeat:no-repeat; background-size:400% 200%; background-position:0 0; transition:transform .1s linear; }
+.race-runner i[data-pose="step"] { background-position:33.333% 0; }
+.race-runner.face-left i { transform:scaleX(-1); }
+.race-runner.is-sprinting i { animation:runner-sprint .18s ease-in-out infinite alternate; filter:brightness(1.18) saturate(1.15); }
+.race-runner b { position:absolute; left:50%; bottom:-2px; transform:translateX(-50%); padding:4px 7px; border:1px solid #49ff12; background:rgba(0,0,0,.82); color:#49ff12; font:italic 900 8px/1 var(--font-display); letter-spacing:.12em; white-space:nowrap; }
 .race-minimap { position: absolute; z-index: 8; left: 20px; bottom: 18px; width: clamp(90px,10vw,145px); aspect-ratio: 1; border: 3px solid #49ff12; border-radius: 50%; background: radial-gradient(circle,#1c2a39 0 14%,#071018 15% 100%); box-shadow: 0 0 18px rgba(73,255,18,.4); overflow: hidden; }
 .race-minimap::before { content:""; position:absolute; inset:-20%; background:repeating-linear-gradient(45deg,transparent 0 17px,#3a5064 18px 22px,transparent 23px 34px); opacity:.55; }.race-minimap i { position:absolute; z-index:1; left:47%; top:0; bottom:0; width:7%; background:#49ff12; transform:skew(-10deg); box-shadow:0 0 8px #49ff12; }.race-minimap b { position:absolute; z-index:2; left:48%; bottom:22%; width:12px; height:12px; transform:rotate(45deg); background:#ffd400; }.race-minimap span { position:absolute; z-index:2; right:18%; top:18%; width:9px; height:9px; border-radius:50%; background:#ff28ad; box-shadow:0 0 8px #ff28ad; }
 .race-speed { position: absolute; z-index: 8; right: 24px; bottom: 25px; width: clamp(100px,12vw,180px); aspect-ratio: 1.2; display: grid; place-content: center; border: 4px solid #ff28ad; border-radius: 50% 50% 15% 15%; background: radial-gradient(circle,rgba(0,0,0,.74),rgba(0,0,0,.96)); box-shadow: 0 0 22px rgba(255,40,173,.4); text-align:center; }.race-speed strong { color:#fff; font:italic 900 clamp(34px,5vw,72px)/.8 var(--font-display); }.race-speed span { color:#ff28ad; font:900 9px/1 var(--font-body); letter-spacing:.15em; }
@@ -1490,17 +1518,116 @@ kbd { min-width: 20px; padding: 4px 6px; display: inline-block; margin-right: 3p
 .race-footer { gap: clamp(8px,2vw,28px); }.race-footer kbd { min-width:18px; padding:3px; margin:0 3px 0 0; border-color:#fff; color:#fff; }.race-footer button { cursor:pointer; }
 .race-touch-controls { display:none; }
 .race-shell.is-crashing { animation: race-crash .26s steps(2); }
+.wanted-mission { position:absolute; z-index:10; top:16px; left:50%; width:min(520px,58%); transform:translateX(-50%); padding:12px 16px; border:1px solid #ffd400; background:linear-gradient(110deg,rgba(0,0,0,.94),rgba(22,4,18,.9)); clip-path:polygon(3% 0,100% 0,97% 100%,0 100%); box-shadow:0 0 28px rgba(255,40,173,.32); text-align:center; text-transform:uppercase; }
+.wanted-mission>span { color:#ff28ad; font:900 9px/1 var(--font-body); letter-spacing:.18em; }.wanted-mission>strong { display:block; margin:5px 0; color:#fff; font:italic 900 clamp(16px,2vw,28px)/1 var(--font-display); }.wanted-mission>div { display:flex; align-items:center; gap:12px; }.wanted-mission b { color:#ffd400; letter-spacing:.1em; text-shadow:0 0 12px #ff7a00; }.wanted-mission i { flex:1; height:6px; border:1px solid rgba(32,220,255,.65); background:#061018; }.wanted-mission em { display:block; width:0; height:100%; background:linear-gradient(90deg,#20dcff,#49ff12); box-shadow:0 0 12px #20dcff; transition:width .2s; }.wanted-mission small { display:block; margin-top:5px; color:#a8b6c9; font:800 8px/1 var(--font-body); letter-spacing:.12em; }
+.jailbreak-overlay { position:absolute; z-index:30; inset:0; display:grid; place-items:center; padding:18px; background:rgba(0,0,0,.82); backdrop-filter:blur(8px); }.jailbreak-overlay[hidden] { display:none; }.jail-card { width:min(520px,92vw); padding:28px; border:1px solid #ff28ad; background:radial-gradient(circle at 50% 0,rgba(255,40,173,.2),transparent 45%),#050609; box-shadow:0 0 55px rgba(255,40,173,.35); text-align:center; }.jail-card>span { color:#20dcff; font:900 9px/1 var(--font-body); letter-spacing:.15em; text-transform:uppercase; }.jail-card h2 { margin:8px 0; color:#fff; font:italic 900 clamp(44px,7vw,82px)/.9 var(--font-display); text-transform:uppercase; text-shadow:5px 5px 0 #8c073f; }.jail-card p { margin:12px auto 20px; max-width:48ch; color:#b8c0cb; font:600 12px/1.5 var(--font-body); }.jail-timer { display:flex; align-items:center; gap:12px; margin:0 0 16px; }.jail-timer i { flex:1; height:10px; background:#221018; }.jail-timer b { display:block; width:100%; height:100%; background:linear-gradient(90deg,#ff28ad,#ffd400); }.jail-timer strong { color:#ffd400; font:900 18px/1 var(--font-display); }.jail-card button { width:100%; padding:15px; border:1px solid #49ff12; background:#071006; color:#49ff12; cursor:pointer; font:italic 900 20px/1 var(--font-display); text-transform:uppercase; }.jail-card button:focus-visible { outline:3px solid #fff; outline-offset:3px; }
 @keyframes garage-float { to { transform: translateY(-7px) scale(1.015); } }
 @keyframes rival-weave { to { left: 45%; transform: translateY(15px) scale(1.1); } }
 @keyframes race-crash { 25% { transform:translateX(-9px); filter:brightness(1.8) saturate(1.6); } 75% { transform:translateX(8px); } }
+@keyframes runner-sprint { to { translate:0 -7px; } }
 
 @media (max-width: 760px) {
   .garage-shell { width:100%; height:100vh; max-height:none; aspect-ratio:auto; grid-template-rows:12% 38% 11% 25% 14%; }
   .garage-title { display:block; padding:12px; text-align:center; }.garage-title h2 { font-size:28px; }.garage-title span { font-size:8px; }
   .garage-selected-car { width:82%; }.garage-car-copy { width:92%; padding:7px; }.garage-car-copy h3 { font-size:20px; }.garage-car-copy p { font-size:7px; }
   .garage-stats { width:94%; gap:5px; }.garage-stats div { grid-template-columns:1fr; gap:3px; }.garage-stats strong { display:none; }
-  .garage-ride-rail { grid-template-columns:repeat(9,90px); padding:5px 10px; }.garage-actions { padding:8px; gap:8px; }.garage-actions button { font-size:16px; }
+  .garage-ride-rail { grid-template-columns:repeat(9,90px); padding:5px 10px; }.garage-actions { padding:8px; gap:8px; grid-template-columns:1fr 1fr; }.garage-actions button { font-size:14px; min-height:42px; }
   .race-shell { width:100%; height:100vh; max-height:none; aspect-ratio:auto; grid-template-rows:14% 1fr 9%; }.race-hud { grid-template-columns:1fr 100px 1fr; gap:5px; padding:9px; }.race-hud strong { font-size:12px; }.race-center strong { font-size:30px; }.race-center small { font-size:6px; }.race-driver small,.race-rival small { font-size:6px; }
-  .race-minimap { left:8px; bottom:8px; width:82px; }.race-speed { right:8px; bottom:9px; width:88px; }.race-speed strong { font-size:36px; }.race-status { left:7px; top:30px; font-size:6px; }.race-nitro { left:25%; right:25%; bottom:8px; }.race-prompt { bottom:62px; max-width:82%; font-size:7px; }.player-car { width:34vw; }.traffic-car { width:20vw; }.race-footer { display:none; }
+  .race-minimap { left:8px; bottom:8px; width:82px; }.race-speed { right:8px; bottom:9px; width:88px; }.race-speed strong { font-size:36px; }.race-status { left:7px; top:30px; font-size:6px; }.race-nitro { left:25%; right:25%; bottom:8px; }.race-prompt { bottom:62px; max-width:82%; font-size:7px; }.player-car { width:34vw; }.race-runner{width:25vw;height:32%}.traffic-car { width:20vw; }.race-footer { display:none; }.wanted-mission{top:7px;width:74%;padding:7px 10px}.wanted-mission>strong{font-size:13px}.wanted-mission small{font-size:6px}.jail-card{padding:18px}.jail-card p{font-size:10px}
   .race-touch-controls { position:absolute; z-index:30; inset:auto 0 0; display:grid; grid-template-columns:repeat(5,1fr); gap:5px; padding:5px; background:rgba(0,0,0,.7); }.race-touch-controls button { min-height:44px; border:1px solid #20dcff; background:rgba(0,0,0,.8); color:#fff; font:italic 900 9px/1 var(--font-display); text-transform:uppercase; }.race-touch-controls button.is-held { background:#49ff12; color:#000; }
+}
+
+
+/* SpaceX-grade universe door + site chrome (select shell only). HUD keeps --green. */
+.site-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0 22px;
+  border-bottom: 1px solid #ffffff;
+  flex-wrap: wrap;
+}
+.chrome-brand {
+  color: #fff;
+  text-decoration: none;
+  font: 800 13px/1 var(--font-body);
+  letter-spacing: 0.28em;
+}
+.chrome-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chrome-nav a,
+.chrome-x {
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #fff;
+  padding: 10px 14px;
+  font: 600 11px/1 var(--font-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.chrome-nav a:hover,
+.chrome-x:hover { background: #fff; color: #000; }
+.universe-door {
+  padding: clamp(48px, 8vw, 110px) 0 36px;
+  border-bottom: 1px solid #ffffff;
+}
+.door-kicker {
+  margin: 0 0 18px;
+  color: #9a9a9a;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.universe-door h1 {
+  margin: 0;
+  max-width: 14ch;
+  font: 800 clamp(52px, 9vw, 104px)/0.88 var(--font-display);
+  letter-spacing: -0.055em;
+  color: #fff;
+}
+.door-lede {
+  margin: 22px 0 0;
+  max-width: 38ch;
+  color: #b3b3b3;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.5;
+}
+.door-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 36px;
+}
+.door-cta {
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid #fff;
+  padding: 16px 20px;
+  font: 600 13px/1 var(--font-body);
+  letter-spacing: 0.08em;
+}
+.door-cta-primary { background: #fff; color: #000; }
+.door-cta:hover { background: #fff; color: #000; }
+.mode-note {
+  margin: 10px 0 0;
+  color: #8a8a8a;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 900px) {
+  .site-chrome { gap: 12px; }
+  .chrome-nav { width: 100%; }
+  .door-actions { display: grid; grid-template-columns: 1fr 1fr; }
+}
+
+.universe-shell {
+  background: #000;
+  color: #fff;
+  padding: 0 clamp(22px, 4vw, 72px) 12px;
+  position: relative;
+  z-index: 3;
 }
