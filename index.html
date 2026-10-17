@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#030805">
+    <meta name="description" content="Deadpool Ninja Turtles Combat — a fast tag-team browser fighting game.">
+    <title>Deadpool Ninja Turtles Combat</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23030805'/%3E%3Cpath d='M10 14h44v10H36v26H24V24H10z' fill='%2349ff12'/%3E%3Cpath d='M18 30h28v8H18z' fill='%23ffd400'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css?v=20260830-exact-wallet-fighter">
+    <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js" defer=""></script>
+    <script src="app.js?v=20260830-exact-wallet-fighter" defer=""></script>
+  </head>
+  <body>
+    <noscript>This game needs JavaScript enabled.</noscript>
+
+    <main id="app">
+      <section class="select-screen" id="selectScreen" aria-labelledby="gameTitle">
+        <header class="select-header">
+          <div class="brand-mark" aria-hidden="true"><span>D</span><span>N</span><span>T</span><span>C</span></div>
+          <div>
+            <h1 id="gameTitle">Deadpool Ninja Turtles <em>Combat</em></h1>
+            <p>Build your tag team. Break their guard. Own the glitch.</p>
+          </div>
+          <div class="select-header-actions">
+            <a class="marketplace-link" href="marketplace.html#universe"><span>FIND THE APPS</span><strong>Universe</strong></a>
+            <a class="marketplace-link" href="marketplace.html"><span>NFT + NINJAAGENT</span><strong>Marketplace</strong></a>
+            <button class="icon-button" id="helpButton" type="button" aria-label="Open controls and rules">?</button>
+          </div>
+        </header>
+
+        <div class="select-layout">
+          <section class="roster-panel" aria-labelledby="rosterTitle">
+            <div class="section-heading">
+              <div>
+                <span class="step-number">01</span>
+                <h2 id="rosterTitle">Choose two fighters</h2>
+              </div>
+              <span class="selection-count" id="selectionCount">2 / 2 locked</span>
+            </div>
+            <div class="fighter-grid" id="fighterGrid">
+    <button class="fighter-card is-selected" type="button" data-fighter="0" style="--fighter-color:#49ff12" aria-pressed="true">
+      <span class="selection-order">1</span>
+      <img src="assets/characters/matrix-cap.jpeg" alt="Matrix Cap">
+      <span class="fighter-card-copy">
+        <small>The Digital Guardian</small>
+        <strong>Matrix Cap</strong>
+        <span>Low chip / utility &amp; mix-up</span>
+        <span class="chip-rating" aria-label="Chip rating 1 out of 5"><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span>
+      </span>
+    </button>
+    <button class="fighter-card is-selected" type="button" data-fighter="1" style="--fighter-color:#ffd400" aria-pressed="true">
+      <span class="selection-order">2</span>
+      <img src="assets/characters/rasta-super.jpeg" alt="Rasta Super">
+      <span class="fighter-card-copy">
+        <small>The Winged Reggae Powerhouse</small>
+        <strong>Rasta Super</strong>
+        <span>Medium chip / balanced pressure</span>
+        <span class="chip-rating" aria-label="Chip rating 3 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span>
+      </span>
+    </button>
+    <button class="fighter-card" type="button" data-fighter="2" style="--fighter-color:#ff008e" aria-pressed="false">
+      <span class="selection-order"></span>
+      <img src="assets/characters/rainbow-clan.jpeg" alt="Rainbow Clan">
+      <span class="fighter-card-copy">
+        <small>The Multicolor Hulk</small>
+        <strong>Rainbow Clan</strong>
+        <span>High chip / mid-range bully</span>
+        <span class="chip-rating" aria-label="Chip rating 4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span>
+      </span>
+    </button>
+    <button class="fighter-card" type="button" data-fighter="3" style="--fighter-color:#20dcff" aria-pressed="false">
+      <span class="selection-order"></span>
+      <img src="assets/characters/yellow-ninja.jpeg" alt="Yellow Ninja">
+      <span class="fighter-card-copy">
+        <small>The Lightning Blade</small>
+        <strong>Yellow Ninja</strong>
+        <span>Oppressive chip / clone pressure</span>
+        <span class="chip-rating" aria-label="Chip rating 4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span>
+      </span>
+    </button></div>
+          </section>
+
+          <aside class="match-panel">
+            <section class="versus-card">
+              <div class="mode-tabs" aria-label="Game mode">
+                <button class="is-selected" data-game-mode="cpu" type="button" aria-pressed="true">VS CPU</button>
+                <button data-game-mode="online" type="button" aria-pressed="false">Online 1V1</button>
+              </div>
+              <div class="difficulty-selector" id="difficultySelector" aria-labelledby="difficultyTitle">
+                <div class="difficulty-heading">
+                  <span>CPU round</span>
+                  <strong id="difficultyTitle">Medium</strong>
+                </div>
+                <div class="difficulty-options" role="group" aria-label="CPU difficulty">
+                  <button type="button" data-difficulty="easy" aria-pressed="false"><strong>Easy</strong><small>Learn</small></button>
+                  <button class="is-selected" type="button" data-difficulty="medium" aria-pressed="true"><strong>Medium</strong><small>Fight</small></button>
+                  <button type="button" data-difficulty="very-hard" aria-pressed="false"><strong>Very difficult</strong><small>Survive</small></button>
+                </div>
+                <p id="difficultyDescription">Balanced reactions, full damage, and standard mastery rewards.</p>
+              </div>
+              <div class="online-lobby" id="onlineLobby" hidden="">
+                <label class="player-name-field">
+                  <span>Player name</span>
+                  <input id="playerNameInput" type="text" maxlength="16" autocomplete="nickname" value="Player One">
+                </label>
+                <div class="room-controls">
+                  <button id="hostRoomButton" type="button">Host room</button>
+                  <div class="join-room">
+                    <input id="roomCodeInput" type="text" maxlength="6" inputmode="text" autocomplete="off" placeholder="ROOM CODE" aria-label="Room code">
+                    <button id="joinRoomButton" type="button">Join</button>
+                  </div>
+                </div>
+                <div class="room-status" id="roomStatus" role="status">
+                  <span class="room-status-led" aria-hidden="true"></span>
+                  <span id="roomStatusText">Host a room or enter a code.</span>
+                  <button id="copyRoomButton" type="button" hidden="">Copy code</button>
+                </div>
+              </div>
+              <div class="team-preview">
+                <div>
+                  <small id="localTeamLabel">Your team</small>
+                  <div class="team-stack" id="playerTeamPreview"><img src="assets/characters/matrix-cap.jpeg" alt="Matrix Cap"><img src="assets/characters/rasta-super.jpeg" alt="Rasta Super"></div>
+                </div>
+                <strong>VS</strong>
+                <div>
+                  <small id="remoteTeamLabel">CPU team</small>
+                  <div class="team-stack cpu" id="cpuTeamPreview"><img src="assets/characters/rainbow-clan.jpeg" alt="Rainbow Clan"><img src="assets/characters/yellow-ninja.jpeg" alt="Yellow Ninja"></div>
+                </div>
+              </div>
+              <p class="synergy-note" id="synergyNote"><strong>A-Tier synergy.</strong> Utility creates openings; Rasta converts them into heavy damage.</p>
+              <div class="record-strip" aria-label="Player high score">
+                <span><small id="profileName">Player One</small> high score</span>
+                <strong id="highScore">000000</strong>
+                <small id="recordSummary">0 wins / 0 KOs / best streak 0</small>
+              </div>
+            </section>
+
+            <section class="stage-panel" aria-labelledby="stageTitle">
+              <div class="section-heading compact">
+                <div>
+                  <span class="step-number">02</span>
+                  <h2 id="stageTitle">Select arena</h2>
+                </div>
+              </div>
+              <div class="stage-preview" id="stagePreview" role="img" aria-label="Selected arena preview" style="background-image: url(&quot;assets/stages/jpeg/matrix-code-rain.jpg&quot;);">
+                <div class="stage-preview-copy">
+                  <span id="stageHazard">4 hazards online</span>
+                  <h3 id="stageName">Matrix Code Rain</h3>
+                </div>
+              </div>
+              <div class="stage-tabs" id="stageTabs"><button class="stage-tab is-selected" type="button" data-stage="0" aria-label="Select Matrix Code Rain" aria-pressed="true">Matrix</button><button class="stage-tab" type="button" data-stage="1" aria-label="Select Orange Void" aria-pressed="false">Void</button><button class="stage-tab" type="button" data-stage="2" aria-label="Select Pyramid Storm" aria-pressed="false">Pyramid</button><button class="stage-tab" type="button" data-stage="3" aria-label="Select Trench Town Yard" aria-pressed="false">Trench</button><button class="stage-tab" type="button" data-stage="4" aria-label="Select Bitcoin Inscription Realm" aria-pressed="false">Bitcoin</button><button class="stage-tab" type="button" data-stage="5" aria-label="Select Neon Boulevard" aria-pressed="false">Boulevard</button></div>
+            </section>
+
+            <section class="sound-card" aria-labelledby="soundCardTitle">
+              <div class="sound-card-heading">
+                <div>
+                  <span class="step-number">03</span>
+                  <h2 id="soundCardTitle">Sound card</h2>
+                </div>
+                <button class="sound-toggle" data-audio-toggle="" type="button" aria-pressed="true" aria-label="Mute game audio">
+                  <span class="sound-led" aria-hidden="true"></span>
+                  <span data-audio-state="">Sound on</span>
+                </button>
+              </div>
+              <div class="theme-readout">
+                <span>Original team theme</span>
+                <strong id="themeName">Digital Guardians / Matrix Mix</strong>
+                <button id="previewThemeButton" type="button">Preview theme</button>
+              </div>
+              <div class="sound-mix">
+                <label>
+                  <span>Music <output id="musicVolumeOutput">38</output></span>
+                  <input id="musicVolume" type="range" min="0" max="100" value="38" aria-label="Music volume">
+                </label>
+                <label>
+                  <span>Action SFX <output id="sfxVolumeOutput">76</output></span>
+                  <input id="sfxVolume" type="range" min="0" max="100" value="76" aria-label="Action sound volume">
+                </label>
+              </div>
+            </section>
+
+            <button class="fight-button" id="fightButton" type="button">
+              <span>Enter combat</span>
+              <small>Space</small>
+            </button>
+            <button class="race-button" id="raceButton" type="button"><span>Launch Street Circuit</span><small>Race selected rivals</small></button>
+          </aside>
+        </div>
+
+        <footer class="select-footer">
+          <span>Furbiworld / 2026</span>
+          <span>Keyboard + touch controls</span>
+          <a href="marketplace.html">NFT + NinjaAgent marketplace</a>
+          <span>Adaptive balance system v2.0</span>
+        </footer>
+      </section>
+
+      <section class="battle-screen" id="battleScreen" aria-label="Combat arena" hidden="">
+        <div class="battle-shell" id="battleShell">
+          <header class="hud">
+            <section class="hud-player hud-player-left">
+              <div class="hud-label-row"><span id="leftPlayerLabel">Player 1</span><strong id="playerName">Matrix Cap</strong></div>
+              <div class="health-track"><div class="health-value" id="playerHealth"></div><span id="playerHealthText">100%</span></div>
+              <div class="fighter-meta">
+                <img id="playerPortrait" alt="">
+                <button class="tag-portrait" id="playerTagButton" type="button" aria-label="Tag teammate">
+                  <img id="playerTagPortrait" alt="">
+                  <span>Tag</span>
+                </button>
+                <div class="rage-group"><span>Rage</span><div class="rage-track"><div id="playerRage"></div></div></div>
+              </div>
+            </section>
+
+            <section class="round-center" aria-live="polite">
+              <span>Round 1</span>
+              <strong id="roundTimer">99</strong>
+              <div class="round-pips"><i></i><i></i><b></b><i></i><i></i></div>
+            </section>
+
+            <section class="hud-player hud-player-right">
+              <div class="hud-label-row"><strong id="cpuName">Rainbow Clan</strong><span id="rightPlayerLabel">CPU</span></div>
+              <div class="health-track"><div class="health-value" id="cpuHealth"></div><span id="cpuHealthText">100%</span></div>
+              <div class="fighter-meta">
+                <div class="rage-group"><span>Rage</span><div class="rage-track"><div id="cpuRage"></div></div></div>
+                <div class="tag-portrait" aria-label="CPU teammate">
+                  <img id="cpuTagPortrait" alt="">
+                  <span>Tag</span>
+                </div>
+                <img id="cpuPortrait" alt="">
+              </div>
+            </section>
+          </header>
+
+          <div class="arena" id="arena">
+            <div class="arena-vignette"></div>
+            <div class="scanlines" aria-hidden="true"></div>
+            <canvas class="combat-fx-canvas" id="combatFxCanvas" aria-hidden="true"></canvas>
+            <div class="stage-title" id="arenaStageTitle"></div>
+            <div class="difficulty-badge" id="difficultyBadge" aria-live="polite"></div>
+            <div class="hazard-alert" id="hazardAlert" role="status"></div>
+            <div class="announcer" id="announcer" aria-live="assertive"></div>
+            <div class="combat-callout" id="combatCallout" aria-live="polite"></div>
+            <div class="combo-counter" id="comboCounter"></div>
+            <div class="combo-banner" id="comboBanner" aria-live="assertive"></div>
+            <div class="combo-tracker" id="comboTracker" aria-live="polite"></div>
+            <aside class="street-utility" aria-live="polite">
+              <div class="street-heat"><span>Street heat</span><b id="streetHeat">★☆☆☆☆</b></div>
+              <div class="street-contract" id="streetContract">Street contract loading</div>
+            </aside>
+            <div class="street-drops" id="streetDrops" aria-hidden="true"></div>
+            <div class="effects-layer" id="effectsLayer" aria-hidden="true"></div>
+
+            <div class="fighter fighter-left" id="playerFighter">
+              <div class="fighter-aura"></div>
+              <div class="fighter-sprite-shell">
+                <div class="fighter-sprite" id="playerFighterSprite" role="img" aria-label=""></div>
+              </div>
+              <span class="fighter-shadow"></span>
+            </div>
+            <div class="fighter fighter-right" id="cpuFighter">
+              <div class="fighter-aura"></div>
+              <div class="fighter-sprite-shell">
+                <div class="fighter-sprite" id="cpuFighterSprite" role="img" aria-label=""></div>
+              </div>
+              <span class="fighter-shadow"></span>
+            </div>
+
+            <div class="arena-floor" aria-hidden="true"></div>
+          </div>
+
+          <footer class="combat-footer">
+            <div class="move-readout">
+              <span>Last move</span>
+              <strong id="moveReadout">Fight!</strong>
+            </div>
+            <div class="desktop-controls" aria-label="Keyboard controls">
+              <span><kbd>A</kbd><kbd>D</kbd> Move</span>
+              <span><kbd>Shift</kbd> Block</span>
+              <span><kbd>J</kbd> Light</span>
+              <span><kbd>K</kbd> Heavy</span>
+              <span><kbd>L</kbd> Special</span>
+              <span><kbd>Q</kbd> Dash</span>
+              <span><kbd>T</kbd> Tag</span>
+              <span><kbd>R</kbd> Rage</span>
+              <span><kbd>M</kbd> Moves</span>
+            </div>
+            <div class="combat-utility">
+              <span class="controller-status" id="controllerStatus">Keyboard</span>
+              <button class="moves-button" id="movesButton" type="button">Moves</button>
+              <button class="audio-mini-button" data-audio-toggle="" type="button" aria-pressed="true" aria-label="Mute game audio">
+                <span aria-hidden="true">♪</span><small data-audio-mini="">On</small>
+              </button>
+              <button class="pause-button" id="pauseButton" type="button" aria-label="Pause game">Ⅱ</button>
+            </div>
+          </footer>
+
+          <div class="touch-controls" id="touchControls" aria-label="Touch game controls">
+            <div class="touch-move">
+              <button data-hold="left" type="button" aria-label="Move left">‹</button>
+              <button data-hold="block" type="button">Block</button>
+              <button data-hold="right" type="button" aria-label="Move right">›</button>
+            </div>
+            <div class="touch-actions">
+              <button data-action="light" type="button">Light</button>
+              <button data-action="heavy" type="button">Heavy</button>
+              <button class="special" data-action="special" type="button">Special</button>
+              <button class="dash" data-action="dash" type="button">Dash</button>
+              <button data-action="tag" type="button">Tag</button>
+              <button class="rage" data-action="rage" type="button">Rage</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="race-garage" id="raceGarage" aria-label="Choose your street ride" hidden>
+        <div class="garage-shell">
+          <header class="garage-title"><span>Neon City Garage</span><h2>Choose your street ride</h2></header>
+          <div class="garage-showcase">
+            <div class="garage-selected-car" id="garageSelectedCar" aria-hidden="true"><i></i></div>
+            <div class="garage-car-copy"><h3 id="garageRideName">Rainbow Neon Roadster</h3><p>Every ride can be won or hijacked from fictional traffic in the city.</p></div>
+          </div>
+          <div class="garage-stats" id="garageStats" aria-label="Vehicle performance"></div>
+          <div class="garage-ride-rail" id="garageRideRail" aria-label="Available street rides"></div>
+          <footer class="garage-actions"><button class="garage-start" id="garageStartButton" type="button">Start circuit race</button><button class="garage-free" id="garageFreeDriveButton" type="button">Enter free drive</button><button class="garage-back" id="garageBackButton" type="button">Back to fighters</button></footer>
+        </div>
+      </section>
+
+      <section class="race-screen" id="raceScreen" aria-label="Neon City street run" hidden>
+        <div class="race-shell" id="raceShell">
+          <header class="race-hud">
+            <div class="race-driver"><span>Player 1</span><strong id="racePlayerName">Driver</strong><small id="racePlayerRide">Street ride</small></div>
+            <div class="race-center"><span id="raceCheckpoint">01 / 03 checkpoint</span><strong id="raceTimer">90</strong><small id="raceRadio">Radio: night run is live — own the streets.</small></div>
+            <div class="race-rival"><span>Rival</span><strong id="raceCpuName">Rival</strong><small id="raceCpuRide">Rival ride</small></div>
+          </header>
+          <div class="race-track" id="raceTrack">
+            <div class="race-progress player"><span id="racePlayerProgress"></span></div><div class="race-progress rival"><span id="raceCpuProgress"></span></div>
+            <div class="checkpoint-gate" id="checkpointGate"><span>Checkpoint</span></div>
+            <div class="race-traffic" id="raceTraffic" aria-label="Moving city traffic"></div>
+            <div class="race-car player-car" id="racePlayerCar"><i></i></div>
+            <div class="race-car cpu-car" id="raceCpuCar"><i></i></div>
+            <div class="race-minimap" aria-hidden="true"><i></i><b></b><span></span></div>
+            <div class="race-speed"><strong id="raceSpeed">000</strong><span>MPH</span></div>
+            <div class="race-status"><span>Armor <b id="raceArmor">100</b></span><span>Heat <b id="raceHeat">☆☆☆☆☆</b></span><span>Score <b id="raceScore">00000</b></span></div>
+            <div class="race-nitro"><span>Nitro</span><i><b id="raceNitro"></b></i></div>
+            <div class="race-prompt" id="racePrompt">W throttle · A/D steer · S brake · Q nitro · E hijack</div>
+          </div>
+          <footer class="race-footer"><span><kbd>W</kbd> throttle</span><span><kbd>A</kbd>/<kbd>D</kbd> steer</span><span><kbd>S</kbd> brake</span><span><kbd>Q</kbd> nitro</span><span><kbd>E</kbd> hijack</span><button id="quitRaceButton" type="button">Quit run</button></footer>
+          <div class="race-touch-controls" aria-label="Touch driving controls"><button data-race-hold="left" type="button">Left</button><button data-race-hold="throttle" type="button">Gas</button><button data-race-hold="right" type="button">Right</button><button data-race-action="nitro" type="button">Nitro</button><button data-race-action="hijack" type="button">Hijack</button></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="pauseOverlay" hidden="">
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+        <span class="panel-label">Match suspended</span>
+        <h2 id="pauseTitle">Pause</h2>
+        <button class="fight-button" id="resumeButton" type="button"><span>Resume combat</span><small>Esc</small></button>
+        <button class="text-button" id="quitButton" type="button">Return to fighter select</button>
+      </section>
+    </div>
+
+    <div class="modal-backdrop" id="resultOverlay" hidden="">
+      <section class="modal result-modal" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+        <span class="panel-label" id="resultLabel">Match complete</span>
+        <h2 id="resultTitle">Victory</h2>
+        <p id="resultDetail"></p>
+        <button class="fight-button" id="rematchButton" type="button"><span>Run it back</span><small>Enter</small></button>
+        <button class="text-button" id="newTeamsButton" type="button">Choose new teams</button>
+      </section>
+    </div>
+
+    <dialog class="help-dialog" id="helpDialog">
+      <button class="dialog-close" id="closeHelpButton" type="button" aria-label="Close">×</button>
+      <span class="panel-label">Combat briefing</span>
+      <h2>Moves + gameplay</h2>
+      <div class="help-grid">
+        <section><strong>PC controls</strong><p><kbd>A</kbd> <kbd>D</kbd> move · <kbd>Shift</kbd> block · <kbd>J</kbd> light · <kbd>K</kbd> heavy · <kbd>L</kbd> weapon special · <kbd>Q</kbd> street dash · <kbd>T</kbd> tag · <kbd>R</kbd> rage · <kbd>M</kbd> moves.</p></section>
+        <section><strong>Controller</strong><p>D-pad or left stick moves. <kbd>A</kbd> light · <kbd>Y</kbd> heavy · <kbd>B</kbd> special · <kbd>X</kbd> block · <kbd>RB</kbd> tag · <kbd>LB</kbd> rage · <kbd>L3</kbd> dash · Menu pauses.</p></section>
+        <section><strong>Street utility</strong><p>Build Street Heat with clean attacks. Grab floating neon drops for rage, armor, or score. Clear the active street contract for a mastery reward and a rage boost.</p></section>
+        <section><strong>Weapon specials</strong><p>Matrix Cap throws a ricochet shield. Rainbow Clan launches a prism shield return. Yellow Ninja spins a razor straw hat. Rasta Super fires heat vision. Ordi Nookie fires twin ordinal laser beams from his glasses.</p></section>
+        <section><strong>Input buffering</strong><p>Press the next attack before the current strike finishes. The game stores the input and releases it at the first legal frame so combo timing stays fast and responsive.</p></section>
+        <section><strong>Tag + rage</strong><p>Tag before a teammate is knocked out to protect their remaining health. At full Rage, activate an eight-second damage-pressure boost.</p></section>
+        <section><strong>Mastery score</strong><p>Damage, named combo finishers, wins, streaks, and knockouts award mastery XP. Build your best combo and raise your persistent combat level.</p></section>
+        <section><strong>CPU rounds</strong><p><b>Easy</b> gives you a longer opening and lighter enemy damage. <b>Medium</b> is the balanced arcade fight. <b>Very Difficult</b> reacts faster, guards, chains combos, and awards the largest mastery multiplier.</p></section>
+        <section><strong>New challengers</strong><p><b>Allan</b> is a fully human counter fighter with fast hands and a ground-smash special. <b>Master Auren</b> controls space with living-light saber waves. <b>Ordi Nookie</b> mixes pixel-powered punches, twin laser vision, and Inscription Overdrive.</p></section>
+      </div>
+      <div class="combo-movelist" aria-label="Named combo moves">
+        <article><strong>Shell Shock Rush</strong><span><kbd>J</kbd> + <kbd>J</kbd> + <kbd>K</kbd></span><small>Fast confirm into a heavy launcher</small></article>
+        <article><strong>Weapon Storm</strong><span><kbd>J</kbd> + <kbd>K</kbd> + <kbd>L</kbd></span><small>Heavy weapon finisher and bonus damage</small></article>
+        <article><strong>Razor Cyclone</strong><span><kbd>K</kbd> + <kbd>J</kbd> + <kbd>K</kbd></span><small>High-impact reversal chain</small></article>
+        <article><strong>Ricochet Breaker</strong><span><kbd>J</kbd> + <kbd>J</kbd> + <kbd>L</kbd></span><small>Double strike into a returning projectile</small></article>
+        <article><strong>Ordinal Overload</strong><span><kbd>L</kbd> + <kbd>L</kbd> + <kbd>L</kbd></span><small>Ordi Nookie only · triple laser barrage with bonus damage</small></article>
+      </div>
+      <form method="dialog"><button class="fight-button" type="submit"><span>Ready</span><small>Esc</small></button></form>
+    </dialog>
+  
+
+</body></html>
