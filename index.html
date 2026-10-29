@@ -30,6 +30,34 @@
         </nav>
         <a class="chrome-x" href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">X / @furbi59360</a>
       </header>
+      <!-- Halloween 48h feature + Black Friday teaser (Oct 31 – Nov 2, 2026 ET) -->
+      <section id="seasonPromo" class="season-promo" aria-label="Halloween feature and Black Friday drop">
+        <style>
+          .season-promo{margin:12px auto;max-width:1100px;padding:16px 20px;border-radius:14px;background:linear-gradient(135deg,#1a0b0b,#2b1206 60%,#120814);border:1px solid #ff7a1a55;color:#f5ece4;font-family:inherit;text-align:center}
+          .season-promo h2{margin:0 0 6px;font-size:1.25rem;color:#ff8a2a;letter-spacing:.02em}
+          .season-promo p{margin:4px 0;font-size:.95rem;opacity:.92}
+          .season-promo .sp-count{display:inline-block;margin-top:8px;padding:6px 12px;border-radius:999px;background:#ffffff12;font-variant-numeric:tabular-nums;font-weight:600}
+          .season-promo a{color:#ffb070;font-weight:600}
+        </style>
+        <h2 id="spTitle">🎃 Halloween Feature Weekend · Oct 31 – Nov 2</h2>
+        <p id="spBody">For 48 hours we're spotlighting Furbi + Deadpool/DNTC drops on the <a href="https://furbi.world/store" target="_blank" rel="noopener noreferrer">NFT store ↗</a> and the <a href="games.html">Game Vault</a>.</p>
+        <p><strong>Black Friday drop coming Nov 27.</strong> Follow <a href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">@furbi59360</a> for details.</p>
+        <span class="sp-count" id="spCount" aria-live="polite"></span>
+        <script>
+          (function(){
+            var hs=Date.parse('2026-10-31T00:00:00-04:00'), he=Date.parse('2026-11-02T00:00:00-05:00'), bf=Date.parse('2026-11-27T00:00:00-05:00');
+            var t=document.getElementById('spTitle'), c=document.getElementById('spCount'), b=document.getElementById('spBody');
+            function f(ms){var s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;return d+'d '+h+'h '+m+'m '+x+'s';}
+            function tick(){var n=Date.now();
+              if(n>=bf){c.textContent='Black Friday drop is live — check the NFT store.';return;}
+              if(n>=hs&&n<he){c.textContent='Halloween feature ends in '+f(he-n)+' · Black Friday drop in '+f(bf-n);}
+              else if(n<hs){c.textContent='Halloween feature starts in '+f(hs-n)+' · Black Friday drop in '+f(bf-n);}
+              else{t.textContent='🖤 Black Friday Drop · Nov 27';b.style.display='none';c.textContent='Drop opens in '+f(bf-n);}
+            }
+            tick();setInterval(tick,1000);
+          })();
+        </script>
+      </section>
       <section class="universe-door" aria-labelledby="universeDoorTitle">
         <p class="door-kicker">Deadpool Ninja Turtles Combat</p>
         <h1 id="universeDoorTitle">Find the universe.</h1>
