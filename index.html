@@ -30,29 +30,54 @@
         </nav>
         <a class="chrome-x" href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">X / @furbi59360</a>
       </header>
-      <!-- Halloween 48h feature + Black Friday teaser (Oct 31 – Nov 2, 2026 ET) -->
-      <section id="seasonPromo" class="season-promo" aria-label="Halloween feature and Black Friday drop">
+      <!-- Black Friday bundles live Nov 10 through Nov 27, 2026 ET -->
+      <section id="seasonPromo" class="season-promo" aria-label="Black Friday bundles">
         <style>
           .season-promo{margin:12px auto;max-width:1100px;padding:16px 20px;border-radius:14px;background:linear-gradient(135deg,#1a0b0b,#2b1206 60%,#120814);border:1px solid #ff7a1a55;color:#f5ece4;font-family:inherit;text-align:center}
           .season-promo h2{margin:0 0 6px;font-size:1.25rem;color:#ff8a2a;letter-spacing:.02em}
           .season-promo p{margin:4px 0;font-size:.95rem;opacity:.92}
           .season-promo .sp-count{display:inline-block;margin-top:8px;padding:6px 12px;border-radius:999px;background:#ffffff12;font-variant-numeric:tabular-nums;font-weight:600}
           .season-promo a{color:#ffb070;font-weight:600}
+          .bf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:16px 0 10px;text-align:left}
+          .bf-card{background:#ffffff10;border:1px solid #ff7a1a44;border-radius:12px;padding:14px 16px}
+          .bf-card h3{margin:0 0 6px;color:#ffb070;font-size:1.05rem}
+          .bf-card p{margin:0 0 10px;font-size:.88rem;opacity:.92}
+          .bf-card .was{text-decoration:line-through;opacity:.65;margin-right:8px;font-size:.95rem}
+          .bf-card .now{font-size:1.4rem;font-weight:800;color:#fff}
+          .bf-card .off{display:inline-block;margin-left:8px;font-size:.75rem;padding:2px 8px;border-radius:999px;background:#ff7a1a;color:#1a0b0b;font-weight:800}
+          .bf-card a.bf-buy{display:inline-block;margin-top:10px;padding:8px 14px;border-radius:999px;background:#ff8a2a;color:#1a0b0b !important;font-weight:800;text-decoration:none}
         </style>
-        <h2 id="spTitle">🎃 Halloween Feature Weekend · Oct 31 – Nov 2</h2>
-        <p id="spBody">For 48 hours we're spotlighting Furbi + Deadpool/DNTC drops on the <a href="https://furbi.world/store" target="_blank" rel="noopener noreferrer">NFT store ↗</a> and the <a href="games.html">Game Vault</a>.</p>
-        <p><strong>Black Friday drop coming Nov 27.</strong> Follow <a href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">@furbi59360</a> for details.</p>
+        <h2 id="spTitle">🖤 Black Friday Bundles · Live now through Nov 27</h2>
+        <p id="spBody">Three Deadpool store packs are live at Black Friday prices. The <a href="games.html">Game Vault</a> Coast City: Wanted download stays $5, and Furbi + DNTC NFTs stay on the <a href="https://furbi.world/store" target="_blank" rel="noopener noreferrer">NFT store ↗</a>. Request a pack below; checkout is confirmed before any payment is taken.</p>
+        <div class="bf-grid" id="bfDrop">
+          <article class="bf-card">
+            <h3>Trench Starter Kit</h3>
+            <p>Plain-language safety guide and checklists the Furbi bots already use. No keys, no bot access, no live trading.</p>
+            <div><span class="was">$29</span><span class="now">$19</span><span class="off">34% off</span></div>
+            <a class="bf-buy" href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">Request this pack</a>
+          </article>
+          <article class="bf-card">
+            <h3>Trap Tape Script Pack</h3>
+            <p>10+ finished faceless crypto-explainer Shorts scripts: titles, hooks, voiceover, captions, thumbnail notes.</p>
+            <div><span class="was">$99</span><span class="now">$69</span><span class="off">30% off</span></div>
+            <a class="bf-buy" href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">Request this pack</a>
+          </article>
+          <article class="bf-card">
+            <h3>Faceless Shorts Raid</h3>
+            <p>Three finished 30–45s explainer Shorts, done for you: script, captions, and thumbnail brief, ready to post.</p>
+            <div><span class="was">$249</span><span class="now">$179</span><span class="off">28% off</span></div>
+            <a class="bf-buy" href="https://x.com/furbi59360" target="_blank" rel="noopener noreferrer">Request this pack</a>
+          </article>
+        </div>
         <span class="sp-count" id="spCount" aria-live="polite"></span>
         <script>
           (function(){
-            var hs=Date.parse('2026-10-31T00:00:00-04:00'), he=Date.parse('2026-11-02T00:00:00-05:00'), bf=Date.parse('2026-11-27T00:00:00-05:00');
-            var t=document.getElementById('spTitle'), c=document.getElementById('spCount'), b=document.getElementById('spBody');
+            var end=Date.parse('2026-11-28T00:00:00-05:00');
+            var c=document.getElementById('spCount');
             function f(ms){var s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;return d+'d '+h+'h '+m+'m '+x+'s';}
             function tick(){var n=Date.now();
-              if(n>=bf){c.textContent='Black Friday drop is live — check the NFT store.';return;}
-              if(n>=hs&&n<he){c.textContent='Halloween feature ends in '+f(he-n)+' · Black Friday drop in '+f(bf-n);}
-              else if(n<hs){c.textContent='Halloween feature starts in '+f(hs-n)+' · Black Friday drop in '+f(bf-n);}
-              else{t.textContent='🖤 Black Friday Drop · Nov 27';b.style.display='none';c.textContent='Drop opens in '+f(bf-n);}
+              if(n>=end){c.textContent='Black Friday prices have ended.';return;}
+              c.textContent='Sale ends in '+f(end-n);
             }
             tick();setInterval(tick,1000);
           })();
