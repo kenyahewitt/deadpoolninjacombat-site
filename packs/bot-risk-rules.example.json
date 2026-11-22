@@ -1,0 +1,49 @@
+{
+  "_comment": "Bot Risk Rules Pack — example config only. Copy this file, rename it, and put your own numbers in. Do not put seed phrases, private keys, RPC secrets, or wallet addresses in this file. Not financial advice.",
+  "version": "2026.11-draft",
+  "per_trade_cap": {
+    "meme_coin_sol": 0.10,
+    "prediction_market_usd": 3.00,
+    "notes": "Hard max size for one entry. If the wallet is smaller than about 3 to 5 times this cap, cut the cap, not the rule."
+  },
+  "total_open_cap_usd": 10.00,
+  "max_open_sleeves": 1,
+  "stops": {
+    "default_pct": -15,
+    "early_tier_pct": -10,
+    "flatten_on_slippage": true
+  },
+  "daily_halt_usd": 5.00,
+  "kill_switch": {
+    "enabled": true,
+    "when_active": "block_all_new_buys",
+    "exits_still_allowed": true,
+    "notes": "Use a local file or flag that your bot checks every loop. Keep the path on a machine you control. This pack does not include a live path."
+  },
+  "rugcheck": {
+    "required_before_buy": true,
+    "on_fail_or_timeout": "skip_and_log"
+  },
+  "liquidity_floor_usd": 8000,
+  "launch_curve": {
+    "exempt_from_floor": true,
+    "requires_fast_exit": true
+  },
+  "skips": {
+    "bot_farm_or_clone": true,
+    "factory_band_lookalikes": true,
+    "brand_costume_unless_verified_official": true,
+    "exploit_or_hack_name_within_hours": 72
+  },
+  "breakeven_lock": {
+    "arm_at_unrealized_pct": 10,
+    "floor_pct": 3
+  },
+  "take_profit_pct": 20,
+  "time_exit_minutes": 15,
+  "logging": {
+    "log_skips_halts_stops_and_locks": true,
+    "include_contract_address_when_known": true,
+    "never_log_secrets": true
+  }
+}

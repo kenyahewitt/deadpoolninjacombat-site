@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="Draft listing: Bot Risk Rules Pack — a concise trading-bot risk rulebook. Not for sale until published. Not financial advice.">
+    <title>Bot Risk Rules Pack (draft) — Deadpool Ninja Combat</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; background: #050308; color: #f5ece4; font-family: Inter, sans-serif; }
+      header, main, footer { width: min(780px, calc(100% - 40px)); margin: 0 auto; }
+      header { padding: 28px 0; border-bottom: 1px solid #ffd40055; display: flex; justify-content: space-between; gap: 16px; align-items: baseline; }
+      header a { color: #ffd400; text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px; }
+      .draft-badge { display: none; margin: 24px 0 0; padding: 4px 12px; border-radius: 999px; background: #ffd400; color: #1a0b0b; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; width: fit-content; }
+      body.is-draft-preview .draft-badge, body.is-live-window .draft-badge { display: inline-block; }
+      body.is-live-window:not(.is-draft-preview) .draft-badge { display: none; }
+      h1 { font-size: clamp(36px, 7vw, 56px); font-weight: 800; letter-spacing: -0.04em; line-height: 0.95; margin: 36px 0 12px; color: #ffd400; }
+      .kicker { margin: 28px 0 0; color: #ff8a2a; font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+      .price { font-size: 2rem; font-weight: 800; margin: 8px 0; }
+      .offer { display: none; margin-left: 10px; font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: #ffd400; color: #1a0b0b; font-weight: 800; vertical-align: middle; }
+      body.bundle-on .offer { display: inline-block; }
+      .alt { color: #cfc0a8; font-size: 14px; margin: 0 0 16px; }
+      h2 { font-size: 18px; margin: 32px 0 10px; color: #fff; }
+      p, li { color: #cfc0a8; line-height: 1.65; font-size: 15px; }
+      .buy { display: inline-block; margin: 8px 8px 8px 0; padding: 10px 16px; border-radius: 999px; background: #333; color: #bbb; font-weight: 800; border: 0; cursor: not-allowed; }
+      .preview-link { display: inline-block; margin: 8px 8px 8px 0; padding: 10px 16px; border-radius: 999px; border: 1px solid #ffd40088; color: #ffd400; text-decoration: none; font-weight: 700; font-size: 14px; }
+      .unpublished { display: none; margin: 48px 0; }
+      body.is-unpublished .listing { display: none; }
+      body.is-unpublished .unpublished { display: block; }
+      .controls { display: none; margin: 20px 0; background: #ffd40014; border: 1px dashed #ffd40088; border-radius: 10px; padding: 12px 16px; }
+      body.is-draft-preview .controls { display: block; }
+      .controls label { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; font-weight: 600; cursor: pointer; color: #f5ece4; }
+      footer { padding: 48px 0 64px; color: #8a8a8a; font-size: 12px; }
+      footer a { color: #ffd400; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/">DNTC</a>
+      <nav><a href="/#cmAddonPromo">Add-on</a> · <a href="marketplace.html">Marketplace</a> · <a href="terms.html">Terms</a></nav>
+    </header>
+    <main>
+      <span class="draft-badge">Draft preview — not live on deadpoolninjacombat.store</span>
+      <div class="unpublished" id="unpublished">
+        <h1>This listing is not live yet.</h1>
+        <p>The Bot Risk Rules Pack is a draft Cyber Monday add-on. It will appear here once it is published.</p>
+        <p><a class="preview-link" href="/">Back to the store</a></p>
+      </div>
+      <div class="listing" id="listing">
+        <p class="kicker">Cyber Monday digital add-on</p>
+        <h1>Bot Risk Rules Pack</h1>
+        <p class="price">$12 <span class="offer">or free with any Black Friday bundle</span></p>
+        <p class="alt">Listed at $12. Alternative standalone price: $9 (decide before publish). Not financial advice.</p>
+        <button class="buy" type="button" disabled>Draft — not for sale yet</button>
+        <a class="preview-link" href="packs/bot-risk-rules-pack.pdf">Preview the PDF</a>
+        <a class="preview-link" href="packs/bot-risk-rules.example.json">Example config</a>
+
+        <div class="controls">
+          <p style="margin-top:0"><strong>Draft controls</strong> (only on this preview).</p>
+          <label>
+            <input type="checkbox" id="cmBundleFreeToggle" checked>
+            <span>Offer free with any Black Friday bundle.</span>
+          </label>
+        </div>
+
+        <h2>What’s in the pack</h2>
+        <p>A concise PDF rulebook plus a copy-paste example config. It covers the hard limits a trading bot should never turn off:</p>
+        <ul>
+          <li>Per-trade cap and total-open cap</li>
+          <li>One open sleeve at a time</li>
+          <li>Stops, including a tighter early-tier stop, and flatten-on-slippage</li>
+          <li>Daily halt</li>
+          <li>KILL file (a local switch that blocks new buys)</li>
+          <li>Rugcheck before every buy</li>
+          <li>Liquidity floor, with an optional launch-curve path that still needs a fast exit</li>
+          <li>Bot-farm / clone skip, including factory-band lookalikes and brand-costume names</li>
+          <li>Breakeven lock</li>
+          <li>Exploit-coin skip for tokens named after a recent hack</li>
+        </ul>
+        <p>The PDF also includes a take-profit and time-exit pair, a logging rule, and a one-page checklist. The numbers inside are example starter limits you can tighten for your own capital.</p>
+
+        <h2>Price and bundle offer</h2>
+        <p>Standalone list price on this draft is <strong>$12</strong>. Digital-seller guides warn that a deep discount on a low-price download can get eaten by fixed fees, so this add-on is not marked down. The $9 price is kept as an alternative if you want it lower. The recommended Cyber Monday offer is to keep the $12 price and include the pack <strong>free with any Black Friday bundle</strong> — the Trench Starter Kit, Trap Tape Script Pack, Faceless Shorts Raid, and the three merch bundles — instead of cutting the standalone price.</p>
+
+        <h2>What this is not</h2>
+        <p>This is not a live bot, a signal service, or wallet access. It does not include seed phrases, private keys, or anyone else’s config paths. It makes no performance claims. It is not financial advice. You are responsible for your own settings and funds.</p>
+
+        <h2>Delivery</h2>
+        <p>Digital download: the PDF and the example JSON config. Checkout is still staged, same as the other draft merch on this branch. Nothing is for sale until this listing is published.</p>
+      </div>
+    </main>
+    <footer>Deadpool Ninja Combat · 2026 · <a href="https://x.com/furbi59360">@furbi59360</a></footer>
+    <script>
+      (function(){
+        window.CM_PACK_PUBLISHED = false;
+        window.CM_PACK_BUNDLE_FREE = true;
+        var start = Date.parse('2026-11-30T00:00:00-05:00');
+        var end = Date.parse('2026-12-02T00:00:00-05:00');
+        var host = location.hostname || '';
+        var isNetlifyPreview = /(?:^|\.)netlify\.app$/i.test(host);
+        var now = Date.now();
+        var show = isNetlifyPreview || (window.CM_PACK_PUBLISHED && now >= start && now < end);
+        document.body.classList.toggle('is-draft-preview', isNetlifyPreview && !window.CM_PACK_PUBLISHED);
+        document.body.classList.toggle('is-live-window', show && window.CM_PACK_PUBLISHED);
+        document.body.classList.toggle('is-unpublished', !show);
+        function apply(on){
+          window.CM_PACK_BUNDLE_FREE = !!on;
+          document.body.classList.toggle('bundle-on', !!on);
+        }
+        var toggle = document.getElementById('cmBundleFreeToggle');
+        if (toggle){
+          toggle.checked = !!window.CM_PACK_BUNDLE_FREE;
+          toggle.addEventListener('change', function(){ apply(toggle.checked); });
+        }
+        apply(!!window.CM_PACK_BUNDLE_FREE);
+      })();
+    </script>
+    <script src="/track.js?v=20261018" defer></script>
+  </body>
+</html>

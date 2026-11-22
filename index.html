@@ -188,6 +188,130 @@
           })();
         </script>
       </section>
+
+      <!-- DRAFT: Cyber Monday digital add-on. Hidden on production until CM_PACK_PUBLISHED is set true and this branch is merged to main. Do not publish from here. -->
+      <section id="cmAddonPromo" class="season-promo cm-addon-promo" hidden aria-label="Cyber Monday Bot Risk Rules Pack draft">
+        <style>
+          .cm-addon-promo{margin:12px auto;max-width:1100px;padding:18px 20px 20px;border-radius:14px;background:linear-gradient(135deg,#0b0a14,#1a1028 55%,#10080c);border:1px solid #ffd40088;color:#f5ece4;font-family:inherit;text-align:center}
+          .cm-addon-promo .bf-draft-badge{display:none;margin:0 auto 10px;padding:4px 12px;border-radius:999px;background:#ffd400;color:#1a0b0b;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+          .cm-addon-promo.is-draft-preview .bf-draft-badge{display:inline-block}
+          .cm-addon-promo h2{margin:0 0 6px;font-size:1.3rem;color:#ffd400;letter-spacing:.03em}
+          .cm-addon-promo .bf-promo-line{margin:4px 0 8px;font-size:1.02rem;font-weight:700;color:#fff}
+          .cm-addon-promo p{margin:4px 0;font-size:.95rem;opacity:.92}
+          .cm-addon-promo .bf-grid{display:grid;grid-template-columns:minmax(260px,1.4fr);gap:12px;margin:16px auto 10px;text-align:left;max-width:640px}
+          .cm-addon-promo .bf-card{background:#00000055;border:1px solid #ffd40055;border-radius:12px;padding:16px 16px 18px}
+          .cm-addon-promo .bf-card .bf-icon{width:56px;height:56px;margin:0 0 8px}
+          .cm-addon-promo .bf-card h3{margin:0 0 6px;color:#ffd400;font-size:1.08rem}
+          .cm-addon-promo .bf-card p{margin:0 0 10px;font-size:.88rem;opacity:.92}
+          .cm-addon-promo .bf-card .was{text-decoration:line-through;opacity:.65;margin-right:8px;font-size:.95rem}
+          .cm-addon-promo .bf-card .now{font-size:1.4rem;font-weight:800;color:#fff}
+          .cm-addon-promo .bf-card .off{display:inline-block;margin-left:8px;font-size:.75rem;padding:2px 8px;border-radius:999px;background:#ffd400;color:#1a0b0b;font-weight:800}
+          .cm-addon-promo .bf-card .bf-buy{display:inline-block;margin-top:10px;padding:8px 14px;border-radius:999px;background:#333;color:#bbb;font-weight:800;border:0;cursor:not-allowed}
+          .cm-addon-promo .cm-alt{display:block;margin-top:6px;font-size:.8rem;opacity:.8}
+          .cm-addon-promo .cm-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+          .cm-addon-promo a.cm-preview-link{display:inline-block;padding:8px 14px;border-radius:999px;border:1px solid #ffd40088;color:#ffd400;text-decoration:none;font-weight:700;font-size:.88rem}
+          .cm-addon-promo .sp-count{display:inline-block;margin-top:8px;padding:6px 12px;border-radius:999px;background:#ffffff12;font-variant-numeric:tabular-nums;font-weight:600}
+          .cm-draft-controls{display:none;margin:12px auto 0;max-width:640px;text-align:left;background:#ffd40014;border:1px dashed #ffd40088;border-radius:10px;padding:10px 14px}
+          .cm-addon-promo.is-draft-preview .cm-draft-controls{display:block}
+          .cm-draft-controls p{margin:0 0 8px;font-size:.82rem}
+          .cm-draft-controls label{display:flex;gap:8px;align-items:flex-start;font-size:.9rem;font-weight:600;cursor:pointer}
+          .cm-draft-controls input{margin-top:3px}
+          .cm-free-badge{display:inline-block;margin:8px 8px 0 0;padding:3px 8px;border-radius:999px;background:#ffd400;color:#1a0b0b;font-size:.72rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+          .cm-free-badge[hidden]{display:none !important}
+        </style>
+        <span class="bf-draft-badge">Draft preview — not live on deadpoolninjacombat.store</span>
+        <h2 id="cmAddonTitle">Cyber Monday Add-on · Bot Risk Rules Pack</h2>
+        <p class="bf-promo-line">A digital rulebook at full price — or free with any Black Friday bundle.</p>
+        <p>Plain-language caps, stops, and skips for trading bots. No keys, no wallet access, no live bot, no performance claims. Not financial advice.</p>
+        <div class="bf-grid" id="cmAddonDrop">
+          <article class="bf-card" data-sku="bot-risk-rules-pack">
+            <svg class="bf-icon" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="56" height="56" rx="10" fill="#120814"/>
+              <path d="M28 8l16 6v14c0 11-7 18-16 22-9-4-16-11-16-22V14z" fill="none" stroke="#ffd400" stroke-width="2"/>
+              <path d="M20 28l6 6 12-14" fill="none" stroke="#ff8a2a" stroke-width="2"/>
+            </svg>
+            <h3>Bot Risk Rules Pack</h3>
+            <p>A concise PDF of the hard limits a trading bot should never turn off: per-trade and total-open caps, stops, a daily halt, a KILL file, rugcheck, a liquidity floor, bot-farm/clone skips, a breakeven lock, and an exploit-coin skip — plus a copy-paste example config. Example numbers you can tighten for your own capital.</p>
+            <div>
+              <span class="now" id="cmPackPrice">$12</span>
+              <span class="off" id="cmPackOfferBadge" hidden>or free with any Black Friday bundle</span>
+            </div>
+            <span class="cm-alt" id="cmPackAlt">Listed at $12. Alternative standalone price: $9 (decide before publish).</span>
+            <div class="cm-actions">
+              <button class="bf-buy" type="button" disabled>Draft — not for sale yet</button>
+              <a class="cm-preview-link" href="bot-risk-rules-pack.html">View listing</a>
+              <a class="cm-preview-link" id="cmPdfLink" href="packs/bot-risk-rules-pack.pdf">Preview the PDF</a>
+            </div>
+          </article>
+        </div>
+        <div class="cm-draft-controls" id="cmDraftControls">
+          <p><strong>Draft controls</strong> (only on this preview — they will not appear on the live store).</p>
+          <label>
+            <input type="checkbox" id="cmBundleFreeToggle" checked>
+            <span>Offer free with any Black Friday bundle (the three live digital packs and the three merch bundles).</span>
+          </label>
+          <p style="margin-top:8px">Standalone list price on this draft is <strong>$12</strong>. The $9 option is noted on the card so you can pick one before publishing. Checkout stays disabled until you say go.</p>
+        </div>
+        <span class="sp-count" id="cmAddonCount" aria-live="polite"></span>
+        <script>
+          (function(){
+            // Leave false on production. Set true, then merge draft/bf-merch-2026 into main, to publish after Devon picks the price and bundle offer.
+            window.CM_PACK_PUBLISHED = false;
+            window.CM_PACK_BUNDLE_FREE = true;
+            window.CM_PACK_PRICE = 12;
+            window.CM_PACK_ALT_PRICE = 9;
+            var start = Date.parse('2026-11-30T00:00:00-05:00');
+            var end = Date.parse('2026-12-02T00:00:00-05:00');
+            var host = location.hostname || '';
+            var isNetlifyPreview = /(?:^|\.)netlify\.app$/i.test(host);
+            var now = Date.now();
+            var show = isNetlifyPreview || (window.CM_PACK_PUBLISHED && now >= start && now < end);
+            var el = document.getElementById('cmAddonPromo');
+            var c = document.getElementById('cmAddonCount');
+            var toggle = document.getElementById('cmBundleFreeToggle');
+            var offerBadge = document.getElementById('cmPackOfferBadge');
+            if (!el) return;
+            if (!show) return;
+            el.hidden = false;
+            if (isNetlifyPreview && !window.CM_PACK_PUBLISHED) el.classList.add('is-draft-preview');
+            function applyBundleFree(on){
+              window.CM_PACK_BUNDLE_FREE = !!on;
+              if (offerBadge) offerBadge.hidden = !on;
+              var cards = document.querySelectorAll('#bfDrop .bf-card, #bfMerchDrop .bf-card');
+              cards.forEach(function(card){
+                var badge = card.querySelector('.cm-free-badge');
+                if (on){
+                  if (!badge){
+                    badge = document.createElement('span');
+                    badge.className = 'cm-free-badge';
+                    badge.textContent = 'Includes Bot Risk Rules Pack free';
+                    var insertBefore = card.querySelector('.bf-buy, a.bf-buy, button.bf-buy');
+                    if (insertBefore) card.insertBefore(badge, insertBefore);
+                    else card.appendChild(badge);
+                  }
+                  badge.hidden = false;
+                } else if (badge){
+                  badge.hidden = true;
+                }
+              });
+            }
+            if (toggle){
+              toggle.checked = !!window.CM_PACK_BUNDLE_FREE;
+              toggle.addEventListener('change', function(){ applyBundleFree(toggle.checked); });
+            }
+            applyBundleFree(!!window.CM_PACK_BUNDLE_FREE);
+            function f(ms){var s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),x=s%60;return d+'d '+h+'h '+m+'m '+x+'s';}
+            function tick(){
+              var n=Date.now();
+              if (!c) return;
+              if (n < start) c.textContent = 'Cyber Monday add-on opens Nov 30 in ' + f(start-n);
+              else if (n >= end) c.textContent = 'Cyber Monday add-on window has ended.';
+              else c.textContent = 'Cyber Monday add-on ends Dec 1 in ' + f(end-n);
+            }
+            tick(); setInterval(tick, 1000);
+          })();
+        </script>
+      </section>
       <section class="universe-door" aria-labelledby="universeDoorTitle">
         <p class="door-kicker">Deadpool Ninja Turtles Combat</p>
         <h1 id="universeDoorTitle">Find the universe.</h1>
