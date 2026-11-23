@@ -1,0 +1,53 @@
+{
+  "catalog_name": "Furbi World licensed game catalog",
+  "updated": "2026-11-23",
+  "price_policy": "price_sol 0.05 is a proposed placeholder for a $5 USD equivalent licensed download. NEO confirms the exact SOL amount. Devon sets the final price before anything goes live. This is not a live sale price and not a forecast of the SOL to USD rate.",
+  "games": [
+    {
+      "id": "deadpool-ninja-combat",
+      "title": "Deadpool Ninja Combat",
+      "description": "Original tag-team browser fighter. Build a two-fighter team and play versus CPU or online 1v1.",
+      "cover_image_url": "https://deadpoolninjacombat.store/assets/concepts/combat-screen-concept.png",
+      "platform": "web",
+      "play_url": "https://deadpoolninjacombat.store/",
+      "price_sol": 0.05,
+      "price_status": "proposed",
+      "price_note": "NEO confirms the exact $5 SOL equivalent. Devon sets the final price before anything goes live. Browser play on the site is free.",
+      "version": "20261016-full-action-1",
+      "license": "Owned by Devon / Furbi World",
+      "license_terms": "Personal-use play and download license. No resale or redistribution. All rights owned by Devon / Furbi World.",
+      "status": "live"
+    },
+    {
+      "id": "coast-city-escape",
+      "title": "Coast City Escape",
+      "description": "Original browser driving story mode in the Game Vault. Playable now in the browser; a licensed download is listed but not yet for sale.",
+      "cover_image_url": "https://deadpoolninjacombat.store/assets/concepts/coast-city-wanted-concept.png",
+      "platform": "web",
+      "play_url": "https://deadpoolninjacombat.store/index.html?race=wanted#raceScreen",
+      "price_sol": 0.05,
+      "price_status": "proposed",
+      "price_note": "NEO confirms the exact $5 SOL equivalent. Devon sets the final price before anything goes live. The Game Vault shows a $5 USD in SOL download button, but checkout stays locked until treasury and delivery are verified. Browser play is free.",
+      "version": "20261016-action-1",
+      "license": "Owned by Devon / Furbi World",
+      "license_terms": "Personal-use play and download license. No resale or redistribution. All rights owned by Devon / Furbi World.",
+      "status": "live"
+    },
+    {
+      "id": "furbi-brawl",
+      "title": "Furbi Brawl",
+      "description": "Original Furbi character brawler for Roblox. Not published yet.",
+      "cover_image_url": null,
+      "platform": "Roblox",
+      "play_url": null,
+      "price_sol": 0.05,
+      "price_status": "proposed",
+      "price_note": "Proposed licensed-download placeholder only. NEO confirms the exact $5 SOL equivalent. Devon sets the final price before anything goes live. There is no public Roblox URL and no SOL checkout yet.",
+      "version": null,
+      "license": "Owned by Devon / Furbi World",
+      "license_terms": "Personal-use play and download license. No resale or redistribution. All rights owned by Devon / Furbi World. Once published on Roblox, in-experience items use Robux and Fur Coins.",
+      "status": "beta",
+      "notes": "Pending Devon's publish in Roblox Studio. No Roblox URL invented. No cover image exists yet on the Combat site or repo."
+    }
+  ]
+}
